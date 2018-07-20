@@ -172,13 +172,13 @@ public struct JSONRPCresponse: Decodable{
             guard let value = EthereumAddress(string, ignoreChecksum: true) else {return nil}
             return value as? T
         }
-//        else if slf == String.self {
-//            guard let value = self.result as? T else {return nil}
-//            return value
-//        } else if slf == Int.self {
-//            guard let value = self.result as? T else {return nil}
-//            return value
-//        }
+        else if slf == String.self {
+            guard let value = self.result as? T else {return nil}
+            return value
+        } else if slf == Int.self {
+            guard let value = self.result as? T else {return nil}
+            return value
+        }
         else if slf == [BigUInt].self {
             guard let string = self.result as? [String] else {return nil}
             let values = string.compactMap { (str) -> BigUInt? in
@@ -204,23 +204,23 @@ public struct JSONRPCresponse: Decodable{
             }
             return values as? T
         }
-//        else if slf == [String].self {
-//            guard let value = self.result as? T else {return nil}
-//            return value
-//        } else if slf == [Int].self {
-//            guard let value = self.result as? T else {return nil}
-//            return value
-//        } else if slf == [String: String].self{
-//            guard let value = self.result as? T else {return nil}
-//            return value
-//        }
-//        else if slf == [String: AnyObject].self{
-//            guard let value = self.result as? T else {return nil}
-//            return value
-//        } else if slf == [String: Any].self{
-//            guard let value = self.result as? T else {return nil}
-//            return value
-//        }
+        else if slf == [String].self {
+            guard let value = self.result as? T else {return nil}
+            return value
+        } else if slf == [Int].self {
+            guard let value = self.result as? T else {return nil}
+            return value
+        } else if slf == [String: String].self{
+            guard let value = self.result as? T else {return nil}
+            return value
+        }
+        else if slf == [String: AnyObject].self{
+            guard let value = self.result as? T else {return nil}
+            return value
+        } else if slf == [String: Any].self{
+            guard let value = self.result as? T else {return nil}
+            return value
+        }
         guard let value = self.result as? T  else {return nil}
         return value
     }

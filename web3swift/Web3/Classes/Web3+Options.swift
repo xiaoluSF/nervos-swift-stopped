@@ -25,8 +25,6 @@ public struct Web3Options {
     
     public static func defaultOptions() -> Web3Options{
         var options = Web3Options()
-//        options.gasLimit = BigUInt("90000", radix: 10)!
-//        options.gasPrice = BigUInt("5000000000", radix:10)!
         options.gasLimit = BigUInt(0)
         options.gasPrice = BigUInt(0)
         options.value = BigUInt(0)

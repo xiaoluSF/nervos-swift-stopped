@@ -78,17 +78,17 @@ class web3swift_infura_Tests: XCTestCase {
         }
     }
     
-    func testGasPrice() {
-        let web3 = Web3.InfuraMainnetWeb3()
-        let result = web3.eth.getGasPrice()
-        switch result {
-        case .failure(let error):
-            print(error)
-            XCTFail()
-        case .success(let response):
-            print(response)
-        }
-    }
+//    func testGasPrice() {
+//        let web3 = Web3.InfuraMainnetWeb3()
+//        let result = web3.eth.getGasPrice()
+//        switch result {
+//        case .failure(let error):
+//            print(error)
+//            XCTFail()
+//        case .success(let response):
+//            print(response)
+//        }
+//    }
 
     
 }

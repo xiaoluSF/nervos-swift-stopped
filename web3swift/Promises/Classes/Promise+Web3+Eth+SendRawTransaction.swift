@@ -45,4 +45,35 @@ extension web3.Eth {
             return returnPromise.promise
         }
     }
+    
+    func sendRawTransactionPromise(_ transaction:NervosTransaction,privateKey:String) -> Promise<NervosTransactionSendingResult> {
+        let queue = web3.requestDispatcher.queue
+        do {
+            guard let request = NervosTransaction.createRawTransactionRequest(transaction: transaction, privateKey: privateKey) else {
+                throw Web3Error.processingError("Transaction is invalid")
+            }
+            let rp = web3.dispatch(request)
+            return rp.map(on: queue ) { response in
+                print(response.result.debugDescription)
+                guard let value: [String:String] = response.getValue() else {
+                    if response.error != nil {
+                        throw Web3Error.nodeError(response.error!.message)
+                    }
+                    throw Web3Error.nodeError("Invalid value from Ethereum node")
+                }
+                let result = NervosTransactionSendingResult(transaction: transaction, hash: value["hash"]!)
+                return result
+            }
+        } catch {
+            let returnPromise = Promise<NervosTransactionSendingResult>.pending()
+            queue.async {
+                returnPromise.resolver.reject(error)
+            }
+            return returnPromise.promise
+        }
+
+        
+        
+    }
+    
 }
