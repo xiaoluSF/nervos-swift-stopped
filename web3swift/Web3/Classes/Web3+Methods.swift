@@ -10,25 +10,25 @@ import Foundation
 
 public enum JSONRPCmethod: String, Encodable {
     
-    case gasPrice = "eth_gasPrice"
-    case blockNumber = "eth_blockNumber"
+    case peerCount = "peerCount"
+    case blockNumber = "blockNumber"
     case getNetwork = "net_version"
-    case sendRawTransaction = "eth_sendRawTransaction"
-    case sendTransaction = "eth_sendTransaction"
-    case estimateGas = "eth_estimateGas"
-    case call = "eth_call"
-    case getTransactionCount = "eth_getTransactionCount"
-    case getBalance = "eth_getBalance"
-    case getCode = "eth_getCode"
-    case getStorageAt = "eth_getStorageAt"
-    case getTransactionByHash = "eth_getTransactionByHash"
-    case getTransactionReceipt = "eth_getTransactionReceipt"
-    case getAccounts = "eth_accounts"
-    case getBlockByHash = "eth_getBlockByHash"
-    case getBlockByNumber = "eth_getBlockByNumber"
-    case personalSign = "eth_sign"
+    case sendRawTransaction = "sendRawTransaction"
+    case sendTransaction = "sendTransaction"
+    case call = "call"
+    case getTransactionCount = "getTransactionCount"
+    case getBalance = "getBalance"
+    case getCode = "getCode"
+    case getStorageAt = "getStorageAt"
+    case getTransactionByHash = "getTransactionByHash"
+    case getTransactionReceipt = "getTransactionReceipt"
+    case getAccounts = "accounts"
+    case getBlockByHash = "getBlockByHash"
+    case getBlockByNumber = "getBlockByNumber"
+    case sign = "sign"
     case unlockAccount = "personal_unlockAccount"
-    case getLogs = "eth_getLogs"
+    case getLogs = "getLogs"
+    
     
     public var requiredNumOfParameters: Int {
         get {
@@ -47,8 +47,6 @@ public enum JSONRPCmethod: String, Encodable {
                 return 2
             case .getBlockByNumber:
                 return 2
-            case .gasPrice:
-                return 0
             case .blockNumber:
                 return 0
             case .getNetwork:

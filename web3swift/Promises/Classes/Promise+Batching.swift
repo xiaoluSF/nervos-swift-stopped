@@ -127,6 +127,7 @@ public class JSONRPCrequestDispatcher {
                         internalPromise.done(on: self.queue) {resp in
                             seal.fulfill(resp)
                         }.catch(on: self.queue){err in
+                            print(err.localizedDescription)
                             seal.reject(err)
                         }
                     } catch {

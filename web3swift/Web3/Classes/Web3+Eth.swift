@@ -36,7 +36,19 @@ extension web3.Eth {
         }
     }
     
-    public func sendRawTransaction(_ transaction: Data) -> Result<TransactionSendingResult, Web3Error> {
+//    public func sendRawTransaction(_ transaction: Data) -> Result<TransactionSendingResult, Web3Error> {
+//        do {
+//            let result = try self.sendRawTransactionPromise(transaction).wait()
+//            return Result(result)
+//        } catch {
+//            if let err = error as? Web3Error {
+//                return Result.failure(err)
+//            }
+//            return Result.failure(Web3Error.generalError(error))
+//        }
+//    }
+    
+    public func sendRawTransaction(_ transaction: EthereumTransaction) -> Result<TransactionSendingResult, Web3Error> {
         do {
             let result = try self.sendRawTransactionPromise(transaction).wait()
             return Result(result)
@@ -48,9 +60,9 @@ extension web3.Eth {
         }
     }
     
-    public func sendRawTransaction(_ transaction: EthereumTransaction) -> Result<TransactionSendingResult, Web3Error> {
+    public func sendRawTransaction(_ transaction:NervosTransaction,privateKey:String) -> Result<NervosTransactionSendingResult,Web3Error>{
         do {
-            let result = try self.sendRawTransactionPromise(transaction).wait()
+            let result = try self.sendRawTransactionPromise(transaction, privateKey: privateKey).wait()
             return Result(result)
         } catch {
             if let err = error as? Web3Error {
@@ -96,18 +108,29 @@ extension web3.Eth {
         }
     }
     
-
-    public func getGasPrice() -> Result<BigUInt, Web3Error> {
-        do {
-            let result = try self.getGasPricePromise().wait()
+    public func getPeerCount() -> Result<BigUInt,Web3Error>{
+        do{
+            let result = try self.getPeerCountPromise().wait()
             return Result(result)
-        } catch {
+        }catch{
             if let err = error as? Web3Error {
                 return Result.failure(err)
             }
             return Result.failure(Web3Error.generalError(error))
         }
     }
+
+//    public func getGasPrice() -> Result<BigUInt, Web3Error> {
+//        do {
+//            let result = try self.getGasPricePromise().wait()
+//            return Result(result)
+//        } catch {
+//            if let err = error as? Web3Error {
+//                return Result.failure(err)
+//            }
+//            return Result.failure(Web3Error.generalError(error))
+//        }
+//    }
     
     public func getTransactionDetails(_ txhash: Data) -> Result<TransactionDetails, Web3Error> {
         do {
@@ -157,17 +180,17 @@ extension web3.Eth {
         }
     }
     
-    public func estimateGas(_ transaction: EthereumTransaction, options: Web3Options?, onBlock: String = "latest") -> Result<BigUInt, Web3Error> {
-        do {
-            let result = try self.estimateGasPromise(transaction, options: options, onBlock: onBlock).wait()
-            return Result(result)
-        } catch {
-            if let err = error as? Web3Error {
-                return Result.failure(err)
-            }
-            return Result.failure(Web3Error.generalError(error))
-        }
-    }
+//    public func estimateGas(_ transaction: EthereumTransaction, options: Web3Options?, onBlock: String = "latest") -> Result<BigUInt, Web3Error> {
+//        do {
+//            let result = try self.estimateGasPromise(transaction, options: options, onBlock: onBlock).wait()
+//            return Result(result)
+//        } catch {
+//            if let err = error as? Web3Error {
+//                return Result.failure(err)
+//            }
+//            return Result.failure(Web3Error.generalError(error))
+//        }
+//    }
     
     public func getAccounts() -> Result<[EthereumAddress],Web3Error> {
         do {

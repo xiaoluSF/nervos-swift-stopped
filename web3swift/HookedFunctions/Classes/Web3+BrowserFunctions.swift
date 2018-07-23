@@ -95,21 +95,21 @@ extension web3.BrowserFunctions {
         }
     }
     
-    public func estimateGas(_ transactionJSON: [String: Any]) -> BigUInt? {
-        guard let transaction = EthereumTransaction.fromJSON(transactionJSON) else {return nil}
-        guard let options = Web3Options.fromJSON(transactionJSON) else {return nil}
-        return self.estimateGas(transaction, options: options)
-    }
+//    public func estimateGas(_ transactionJSON: [String: Any]) -> BigUInt? {
+//        guard let transaction = EthereumTransaction.fromJSON(transactionJSON) else {return nil}
+//        guard let options = Web3Options.fromJSON(transactionJSON) else {return nil}
+//        return self.estimateGas(transaction, options: options)
+//    }
     
-    public func estimateGas(_ transaction: EthereumTransaction, options: Web3Options) -> BigUInt? {
-        let result = self.web3.eth.estimateGas(transaction, options: options)
-        switch result {
-        case .failure(_):
-            return nil
-        case .success(let res):
-            return res
-        }
-    }
+//    public func estimateGas(_ transaction: EthereumTransaction, options: Web3Options) -> BigUInt? {
+//        let result = self.web3.eth.estimateGas(transaction, options: options)
+//        switch result {
+//        case .failure(_):
+//            return nil
+//        case .success(let res):
+//            return res
+//        }
+//    }
     
     public func prepareTxForApproval(_ transactionJSON: [String: Any]) -> (transaction: EthereumTransaction?, options: Web3Options?) {
         guard let transaction = EthereumTransaction.fromJSON(transactionJSON) else {return (nil, nil)}
@@ -118,18 +118,18 @@ extension web3.BrowserFunctions {
     }
     
     public func prepareTxForApproval(_ trans: EthereumTransaction, options  opts: Web3Options) -> (transaction: EthereumTransaction?, options: Web3Options?) {
-        var transaction = trans
-        var options = opts
+        let transaction = trans
+        let options = opts
         guard let _ = options.from else {return (nil, nil)}
-        let gasPriceResult = self.web3.eth.getGasPrice()
-        if case .failure(_) = gasPriceResult {
-            return (nil, nil)
-        }
-        transaction.gasPrice = gasPriceResult.value!
-        options.gasPrice = gasPriceResult.value!
-        guard let gasEstimate = self.estimateGas(transaction, options: options) else {return (nil, nil)}
-        transaction.gasLimit = gasEstimate
-        options.gasLimit = gasEstimate
+//        let gasPriceResult = self.web3.eth.getGasPrice()
+//        if case .failure(_) = gasPriceResult {
+//            return (nil, nil)
+//        }
+//        transaction.gasPrice = gasPriceResult.value!
+//        options.gasPrice = gasPriceResult.value!
+//        guard let gasEstimate = self.estimateGas(transaction, options: options) else {return (nil, nil)}
+//        transaction.gasLimit = gasEstimate
+//        options.gasLimit = gasEstimate
         print(transaction)
         return (transaction, options)
     }
@@ -145,13 +145,13 @@ extension web3.BrowserFunctions {
             var transaction = trans
             guard let from = options.from else {return nil}
             guard let keystoreManager = self.web3.provider.attachedKeystoreManager else {return nil}
-            let gasPriceResult = self.web3.eth.getGasPrice()
-            if case .failure(_) = gasPriceResult {
-                return nil
-            }
-            transaction.gasPrice = gasPriceResult.value!
-            guard let gasEstimate = self.estimateGas(transaction, options: options) else {return nil}
-            transaction.gasLimit = gasEstimate
+//            let gasPriceResult = self.web3.eth.getGasPrice()
+//            if case .failure(_) = gasPriceResult {
+//                return nil
+//            }
+//            transaction.gasPrice = gasPriceResult.value!
+//            guard let gasEstimate = self.estimateGas(transaction, options: options) else {return nil}
+//            transaction.gasLimit = gasEstimate
             
             let nonceResult = self.web3.eth.getTransactionCount(address: from, onBlock: "pending")
             if case .failure(_) = nonceResult {

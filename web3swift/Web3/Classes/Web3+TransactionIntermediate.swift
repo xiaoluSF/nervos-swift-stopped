@@ -65,17 +65,17 @@ extension web3.web3contract {
             }
         }
         
-        public func estimateGas(options: Web3Options?, onBlock: String = "latest") -> Result<BigUInt, Web3Error> {
-            do {
-                let result = try self.estimateGasPromise(options: options, onBlock: onBlock).wait()
-                return Result(result)
-            } catch {
-                if let err = error as? Web3Error {
-                    return Result.failure(err)
-                }
-                return Result.failure(Web3Error.generalError(error))
-            }
-        }
+//        public func estimateGas(options: Web3Options?, onBlock: String = "latest") -> Result<BigUInt, Web3Error> {
+//            do {
+//                let result = try self.estimateGasPromise(options: options, onBlock: onBlock).wait()
+//                return Result(result)
+//            } catch {
+//                if let err = error as? Web3Error {
+//                    return Result.failure(err)
+//                }
+//                return Result.failure(Web3Error.generalError(error))
+//            }
+//        }
 
         func assemble(options: Web3Options? = nil, onBlock: String = "pending") -> Result<EthereumTransaction, Web3Error> {
             do {
@@ -111,33 +111,33 @@ extension web3.web3contract.TransactionIntermediate {
             optionsForGasEstimation.to = mergedOptions.to
             optionsForGasEstimation.value = mergedOptions.value
             let getNoncePromise : Promise<BigUInt> = self.web3.eth.getTransactionCountPromise(address: from, onBlock: onBlock)
-            let gasEstimatePromise : Promise<BigUInt> = self.web3.eth.estimateGasPromise(assembledTransaction, options: optionsForGasEstimation, onBlock: onBlock)
-            let gasPricePromise : Promise<BigUInt> = self.web3.eth.getGasPricePromise()
-            var promisesToFulfill: [Promise<BigUInt>] = [getNoncePromise, gasPricePromise, gasPricePromise]
-            when(resolved: getNoncePromise, gasEstimatePromise, gasPricePromise).map(on: queue, { (results:[PromiseResult<BigUInt>]) throws -> EthereumTransaction in
+//            let gasEstimatePromise : Promise<BigUInt> = self.web3.eth.estimateGasPromise(assembledTransaction, options: optionsForGasEstimation, onBlock: onBlock)
+//            let gasPricePromise : Promise<BigUInt> = self.web3.eth.getGasPricePromise()
+            var promisesToFulfill: [Promise<BigUInt>] = [getNoncePromise]
+            when(resolved: getNoncePromise).map(on: queue, { (results:[PromiseResult<BigUInt>]) throws -> EthereumTransaction in
                 
                 promisesToFulfill.removeAll()
                 guard case .fulfilled(let nonce) = results[0] else {
                     throw Web3Error.processingError("Failed to fetch nonce")
                 }
-                guard case .fulfilled(let gasEstimate) = results[1] else {
-                    throw Web3Error.processingError("Failed to fetch gas estimate")
-                }
-                guard case .fulfilled(let gasPrice) = results[2] else {
-                    throw Web3Error.processingError("Failed to fetch gas price")
-                }
-                guard let estimate = Web3Options.smartMergeGasLimit(originalOptions: options, extraOptions: mergedOptions, gasEstimate: gasEstimate) else {
-                    throw Web3Error.processingError("Failed to calculate gas estimate that satisfied options")
-                }
+//                guard case .fulfilled(let gasEstimate) = results[1] else {
+//                    throw Web3Error.processingError("Failed to fetch gas estimate")
+//                }
+//                guard case .fulfilled(let gasPrice) = results[2] else {
+//                    throw Web3Error.processingError("Failed to fetch gas price")
+//                }
+//                guard let estimate = Web3Options.smartMergeGasLimit(originalOptions: options, extraOptions: mergedOptions, gasEstimate: gasEstimate) else {
+//                    throw Web3Error.processingError("Failed to calculate gas estimate that satisfied options")
+//                }
                 assembledTransaction.nonce = nonce
-                assembledTransaction.gasLimit = estimate
-                if assembledTransaction.gasPrice == 0 {
-                    if mergedOptions.gasPrice != nil {
-                        assembledTransaction.gasPrice = mergedOptions.gasPrice!
-                    } else {
-                        assembledTransaction.gasPrice = gasPrice
-                    }
-                }
+//                assembledTransaction.gasLimit = estimate
+//                if assembledTransaction.gasPrice == 0 {
+//                    if mergedOptions.gasPrice != nil {
+//                        assembledTransaction.gasPrice = mergedOptions.gasPrice!
+//                    } else {
+//                        assembledTransaction.gasPrice = gasPrice
+//                    }
+//                }
                 return assembledTransaction
             }).done(on: queue) {tx in
                     seal.fulfill(tx)
@@ -196,25 +196,25 @@ extension web3.web3contract.TransactionIntermediate {
         return returnPromise
     }
     
-    func estimateGasPromise(options: Web3Options? = nil, onBlock: String = "latest") -> Promise<BigUInt>{
-        let assembledTransaction : EthereumTransaction = self.transaction
-        let queue = self.web3.requestDispatcher.queue
-        let returnPromise = Promise<BigUInt> { seal in
-            guard let mergedOptions = Web3Options.merge(self.options, with: options) else {
-                seal.reject(Web3Error.inputError("Provided options are invalid"))
-                return
-            }
-            var optionsForGasEstimation = Web3Options()
-            optionsForGasEstimation.from = mergedOptions.from
-            optionsForGasEstimation.to = mergedOptions.to
-            optionsForGasEstimation.value = mergedOptions.value
-            let promise = self.web3.eth.estimateGasPromise(assembledTransaction, options: optionsForGasEstimation, onBlock: onBlock)
-            promise.done(on: queue) {(estimate: BigUInt) in
-                    seal.fulfill(estimate)
-                }.catch(on: queue) {err in
-                    seal.reject(err)
-            }
-        }
-        return returnPromise
-    }
+//    func estimateGasPromise(options: Web3Options? = nil, onBlock: String = "latest") -> Promise<BigUInt>{
+//        let assembledTransaction : EthereumTransaction = self.transaction
+//        let queue = self.web3.requestDispatcher.queue
+//        let returnPromise = Promise<BigUInt> { seal in
+//            guard let mergedOptions = Web3Options.merge(self.options, with: options) else {
+//                seal.reject(Web3Error.inputError("Provided options are invalid"))
+//                return
+//            }
+//            var optionsForGasEstimation = Web3Options()
+//            optionsForGasEstimation.from = mergedOptions.from
+//            optionsForGasEstimation.to = mergedOptions.to
+//            optionsForGasEstimation.value = mergedOptions.value
+//            let promise = self.web3.eth.estimateGasPromise(assembledTransaction, options: optionsForGasEstimation, onBlock: onBlock)
+//            promise.done(on: queue) {(estimate: BigUInt) in
+//                    seal.fulfill(estimate)
+//                }.catch(on: queue) {err in
+//                    seal.reject(err)
+//            }
+//        }
+//        return returnPromise
+//    }
 }

@@ -11,7 +11,9 @@ import BigInt
 
 public class InfuraProvider: Web3HttpProvider {
     public init?(_ net:Networks, accessToken token: String? = nil, keystoreManager manager: KeystoreManager? = nil) {
-        var requestURLstring = "https://" + net.name + ".infura.io/"
+//        var requestURLstring = "https://" + net.name + ".infura.io/"
+        var requestURLstring = "http://47.94.105.230:1337/"
+//        var requestURLstring = "http://47.75.129.215:1337/"
         if token != nil {
             requestURLstring = requestURLstring + token!
         }
@@ -21,7 +23,7 @@ public class InfuraProvider: Web3HttpProvider {
     
     enum supportedPostMethods: String {
         case eth_estimateGas = "eth_estimateGas"
-        case eth_sendRawTransaction = "eth_sendRawTransaction"
+        case eth_sendRawTransaction = "sendRawTransaction"
     }
     
     enum supportedGetMethods: String{

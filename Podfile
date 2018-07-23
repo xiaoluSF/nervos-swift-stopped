@@ -5,6 +5,7 @@ def import_pods
   pod 'Result', '~> 3.0.0'
   pod 'libsodium', :modular_headers => true
   pod 'secp256k1_ios', :git => 'https://github.com/shamatar/secp256k1_ios.git', :modular_headers => true
+  pod 'SwiftProtobuf', git: 'https://github.com/apple/swift-protobuf.git', :tag => '1.0.3'
 end
 
 target 'web3swift-macOS' do

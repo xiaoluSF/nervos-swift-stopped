@@ -654,4 +654,9 @@ public struct TransactionSendingResult {
     public var hash: String
 }
 
+public struct NervosTransactionSendingResult {
+    public var transaction: NervosTransaction
+    public var hash: String
+}
+
 
