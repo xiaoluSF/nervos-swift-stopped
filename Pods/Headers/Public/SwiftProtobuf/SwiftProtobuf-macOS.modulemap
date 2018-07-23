@@ -1,7 +1,0 @@
-module SwiftProtobuf {
-  umbrella header "SwiftProtobuf-macOS-umbrella.h"
-  exclude header "SwiftProtobuf-iOS-umbrella.h"
-
-  export *
-  module * { export * }
-}
