@@ -11,22 +11,22 @@ import BigInt
 import PromiseKit
 
 extension web3.Eth {
-    public func getBlockByNumberPromise(_ number: UInt64, fullTransactions: Bool = false) -> Promise<Block> {
+    public func getBlockByNumberPromise(_ number: UInt64, fullTransactions: Bool = false) -> Promise<NervosBlock> {
         let block = String(number, radix: 16).addHexPrefix()
         return getBlockByNumberPromise(block, fullTransactions: fullTransactions)
     }
     
-    public func getBlockByNumberPromise(_ number: BigUInt, fullTransactions: Bool = false) -> Promise<Block> {
+    public func getBlockByNumberPromise(_ number: BigUInt, fullTransactions: Bool = false) -> Promise<NervosBlock> {
         let block = String(number, radix: 16).addHexPrefix()
         return getBlockByNumberPromise(block, fullTransactions: fullTransactions)
     }
     
-    public func getBlockByNumberPromise(_ number: String, fullTransactions: Bool = false) -> Promise<Block> {
+    public func getBlockByNumberPromise(_ number: String, fullTransactions: Bool = false) -> Promise<NervosBlock> {
         let request = JSONRPCRequestFabric.prepareRequest(.getBlockByNumber, parameters: [number, fullTransactions])
         let rp = web3.dispatch(request)
         let queue = web3.requestDispatcher.queue
         return rp.map(on: queue ) { response in
-            guard let value: Block = response.getValue() else {
+            guard let value: NervosBlock = response.getValue() else {
                 if response.error != nil {
                     throw Web3Error.nodeError(response.error!.message)
                 }

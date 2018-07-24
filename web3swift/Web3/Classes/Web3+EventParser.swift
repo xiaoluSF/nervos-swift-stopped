@@ -181,9 +181,11 @@ extension web3.web3contract.EventParser {
             if self.filter != nil && (self.filter?.fromBlock != nil || self.filter?.toBlock != nil) {
                 throw Web3Error.inputError("Can not mix parsing specific block and using block range filter")
             }
-            return self.web3.eth.getBlockByNumberPromise(blockNumber).then(on: queue) {res in
-                return self.parseBlockPromise(res)
-            }
+//            return self.web3.eth.getBlockByNumberPromise(blockNumber).then(on: queue) {res in
+//                return self.parseBlockPromise(res)
+//            }
+            let returnPromise = Promise<[EventParserResultProtocol]>.pending()
+            return returnPromise.promise
         } catch {
             let returnPromise = Promise<[EventParserResultProtocol]>.pending()
             queue.async {

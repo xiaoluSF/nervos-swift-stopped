@@ -25,14 +25,6 @@ class web3swift_promises_Tests: XCTestCase {
     }
     
     func testGetTransactionDetailsPromise() {
-        do {
-            let web3 = Web3.InfuraMainnetWeb3()
-            let result = try web3.eth.getTransactionDetailsPromise("0x127519412cefd773b952a5413a4467e9119654f59a34eca309c187bd9f3a195a").wait()
-            print(result)
-            XCTAssert(result.transaction.gasLimit == BigUInt(78423))
-        } catch {
-            print(error)
-        }
     }
     
 //    func testEstimateGasPromise() {

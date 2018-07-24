@@ -84,6 +84,30 @@ extension web3.Eth {
         }
     }
     
+    public func getCode(address: String,onBlock: String = "latest") -> Result<Data,Web3Error> {
+        do {
+            let result = try self.getCodePromise(address: address).wait()
+            return Result(result)
+        } catch {
+            if let err = error as? Web3Error {
+                return Result.failure(err)
+            }
+            return Result.failure(Web3Error.generalError(error))
+        }
+    }
+    
+    public func getAbi(address: String,onBlock: String = "latest") -> Result<Data,Web3Error> {
+        do {
+            let result = try self.getAbiPromise(address: address).wait()
+            return Result(result)
+        } catch {
+            if let err = error as? Web3Error {
+                return Result.failure(err)
+            }
+            return Result.failure(Web3Error.generalError(error))
+        }
+    }
+    
     public func getBalance(address: EthereumAddress, onBlock: String = "latest") -> Result<BigUInt, Web3Error> {
         do {
             let result = try self.getBalancePromise(address: address, onBlock: onBlock).wait()
@@ -180,6 +204,30 @@ extension web3.Eth {
         }
     }
     
+    public func getTransactionProof(_ transactionHash:String) -> Result<Data,Web3Error> {
+        do {
+            let result = try self.getTransactionProofPromise(transactionHash: transactionHash).wait()
+            return Result(result)
+        } catch {
+            if let err = error as? Web3Error {
+                return Result.failure(err)
+            }
+            return Result.failure(Web3Error.generalError(error))
+        }
+    }
+    
+    public func getTransactionProof(_ transactionHash:Data) -> Result<Data,Web3Error> {
+        do {
+            let result = try self.getTransactionProofPromise(transactionHash: transactionHash).wait()
+            return Result(result)
+        } catch {
+            if let err = error as? Web3Error {
+                return Result.failure(err)
+            }
+            return Result.failure(Web3Error.generalError(error))
+        }
+    }
+    
 //    public func estimateGas(_ transaction: EthereumTransaction, options: Web3Options?, onBlock: String = "latest") -> Result<BigUInt, Web3Error> {
 //        do {
 //            let result = try self.estimateGasPromise(transaction, options: options, onBlock: onBlock).wait()
@@ -204,7 +252,7 @@ extension web3.Eth {
         }
     }
     
-    public func getBlockByHash(_ hash: String, fullTransactions: Bool = false) -> Result<Block,Web3Error> {
+    public func getBlockByHash(_ hash: String, fullTransactions: Bool = false) -> Result<NervosBlock,Web3Error> {
         do {
             let result = try self.getBlockByHashPromise(hash, fullTransactions: fullTransactions).wait()
             return Result(result)
@@ -215,8 +263,8 @@ extension web3.Eth {
             return Result.failure(Web3Error.generalError(error))
         }
     }
-    
-    public func getBlockByHash(_ hash: Data, fullTransactions: Bool = false) -> Result<Block,Web3Error> {
+
+    public func getBlockByHash(_ hash: Data, fullTransactions: Bool = false) -> Result<NervosBlock,Web3Error> {
         do {
             let result = try self.getBlockByHashPromise(hash, fullTransactions: fullTransactions).wait()
             return Result(result)
@@ -227,8 +275,8 @@ extension web3.Eth {
             return Result.failure(Web3Error.generalError(error))
         }
     }
-    
-    public func getBlockByNumber(_ number: UInt64, fullTransactions: Bool = false) -> Result<Block,Web3Error> {
+
+    public func getBlockByNumber(_ number: UInt64, fullTransactions: Bool = false) -> Result<NervosBlock,Web3Error> {
         do {
             let result = try self.getBlockByNumberPromise(number, fullTransactions: fullTransactions).wait()
             return Result(result)
@@ -239,8 +287,8 @@ extension web3.Eth {
             return Result.failure(Web3Error.generalError(error))
         }
     }
-    
-    public func getBlockByNumber(_ number: BigUInt, fullTransactions: Bool = false) -> Result<Block,Web3Error> {
+
+    public func getBlockByNumber(_ number: BigUInt, fullTransactions: Bool = false) -> Result<NervosBlock,Web3Error> {
         do {
             let result = try self.getBlockByNumberPromise(number, fullTransactions: fullTransactions).wait()
             return Result(result)
@@ -251,10 +299,34 @@ extension web3.Eth {
             return Result.failure(Web3Error.generalError(error))
         }
     }
-    
-    public func getBlockByNumber(_ block:String, fullTransactions: Bool = false) -> Result<Block,Web3Error> {
+
+    public func getBlockByNumber(_ block:String, fullTransactions: Bool = false) -> Result<NervosBlock,Web3Error> {
         do {
             let result = try self.getBlockByNumberPromise(block, fullTransactions: fullTransactions).wait()
+            return Result(result)
+        } catch {
+            if let err = error as? Web3Error {
+                return Result.failure(err)
+            }
+            return Result.failure(Web3Error.generalError(error))
+        }
+    }
+    
+    public func getMetaData(_ blockNumber:BigUInt) -> Result<MetaData,Web3Error> {
+        do {
+            let result = try self.getMetaDataPromise(blockNumber).wait()
+            return Result(result)
+        } catch {
+            if let err = error as? Web3Error {
+                return Result.failure(err)
+            }
+            return Result.failure(Web3Error.generalError(error))
+        }
+    }
+    
+    public func getMetaData(_ blockNumber:String) -> Result<MetaData,Web3Error> {
+        do {
+            let result = try self.getMetaDataPromise(blockNumber).wait()
             return Result(result)
         } catch {
             if let err = error as? Web3Error {

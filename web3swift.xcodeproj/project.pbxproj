@@ -178,6 +178,16 @@
 		81FB2203207BC6DB007F9A83 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81FB2202207BC6DB007F9A83 /* ImageIO.framework */; };
 		81FB2207207BCFF9007F9A83 /* bankex-foundation-logo-coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 81FB2206207BCFF9007F9A83 /* bankex-foundation-logo-coin.png */; };
 		81FB2208207BCFF9007F9A83 /* bankex-foundation-logo-coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 81FB2206207BCFF9007F9A83 /* bankex-foundation-logo-coin.png */; };
+		8929517D2106F4FE00E2410F /* Promise+Web3+Eth+GetMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8929517C2106F4FE00E2410F /* Promise+Web3+Eth+GetMetaData.swift */; };
+		8929517E2106F51100E2410F /* Promise+Web3+Eth+GetPeerCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C6A6FE20FEDF7A003EC9A0 /* Promise+Web3+Eth+GetPeerCount.swift */; };
+		8929517F2106F51500E2410F /* Promise+Web3+Eth+GetMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8929517C2106F4FE00E2410F /* Promise+Web3+Eth+GetMetaData.swift */; };
+		892951802106F51E00E2410F /* Promise+Web3+Eth+EstimateGas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A1823F20D79FDB0016741F /* Promise+Web3+Eth+EstimateGas.swift */; };
+		8929518221070D4800E2410F /* Promise+Web3+Eth+GetCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8929518121070D4800E2410F /* Promise+Web3+Eth+GetCode.swift */; };
+		8929518321070D4C00E2410F /* Promise+Web3+Eth+GetCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8929518121070D4800E2410F /* Promise+Web3+Eth+GetCode.swift */; };
+		89295185210712AC00E2410F /* Promise+Web3+Eth+GetAbi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89295184210712AC00E2410F /* Promise+Web3+Eth+GetAbi.swift */; };
+		89295186210712AC00E2410F /* Promise+Web3+Eth+GetAbi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89295184210712AC00E2410F /* Promise+Web3+Eth+GetAbi.swift */; };
+		89295188210717F300E2410F /* Promise+Web3+Eth+GetTransactionProof.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89295187210717F300E2410F /* Promise+Web3+Eth+GetTransactionProof.swift */; };
+		89295189210717F300E2410F /* Promise+Web3+Eth+GetTransactionProof.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89295187210717F300E2410F /* Promise+Web3+Eth+GetTransactionProof.swift */; };
 		8984C15620FF189F00C585FE /* nervos_TestGetMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8984C15520FF189F00C585FE /* nervos_TestGetMethod.swift */; };
 		8984C15820FF2B3500C585FE /* NervosTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8984C15720FF2B3500C585FE /* NervosTransaction.swift */; };
 		8984C15A21005AF900C585FE /* Transaction.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8984C15921005AF900C585FE /* Transaction.pb.swift */; };
@@ -326,6 +336,10 @@
 		81FB2206207BCFF9007F9A83 /* bankex-foundation-logo-coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bankex-foundation-logo-coin.png"; sourceTree = "<group>"; };
 		8349531F1984454E50389370 /* libPods-web3swift-iOS_Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-web3swift-iOS_Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8675751D91DB2DBC9E7A3469 /* libPods-web3swift-macOS_Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-web3swift-macOS_Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8929517C2106F4FE00E2410F /* Promise+Web3+Eth+GetMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Promise+Web3+Eth+GetMetaData.swift"; sourceTree = "<group>"; };
+		8929518121070D4800E2410F /* Promise+Web3+Eth+GetCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Promise+Web3+Eth+GetCode.swift"; sourceTree = "<group>"; };
+		89295184210712AC00E2410F /* Promise+Web3+Eth+GetAbi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Promise+Web3+Eth+GetAbi.swift"; sourceTree = "<group>"; };
+		89295187210717F300E2410F /* Promise+Web3+Eth+GetTransactionProof.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Promise+Web3+Eth+GetTransactionProof.swift"; sourceTree = "<group>"; };
 		8984C15520FF189F00C585FE /* nervos_TestGetMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nervos_TestGetMethod.swift; sourceTree = "<group>"; };
 		8984C15720FF2B3500C585FE /* NervosTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NervosTransaction.swift; sourceTree = "<group>"; };
 		8984C15921005AF900C585FE /* Transaction.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transaction.pb.swift; sourceTree = "<group>"; };
@@ -613,6 +627,10 @@
 				81A1824A20D7DF1B0016741F /* Promise+Web3+Personal+UnlockAccount.swift */,
 				81195AAF20D7FF8500ABC6B1 /* Promise+Web3+Contract+GetIndexedEvents.swift */,
 				89C6A6FE20FEDF7A003EC9A0 /* Promise+Web3+Eth+GetPeerCount.swift */,
+				8929517C2106F4FE00E2410F /* Promise+Web3+Eth+GetMetaData.swift */,
+				8929518121070D4800E2410F /* Promise+Web3+Eth+GetCode.swift */,
+				89295184210712AC00E2410F /* Promise+Web3+Eth+GetAbi.swift */,
+				89295187210717F300E2410F /* Promise+Web3+Eth+GetTransactionProof.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1013,6 +1031,7 @@
 				81C146F71FF274B200AA943E /* Web3+Structures.swift in Sources */,
 				8104E2281FE82BDC00F952CB /* Web3+Utils.swift in Sources */,
 				818ABD5D1FE95FC9002657BB /* Web3+Contract.swift in Sources */,
+				89295185210712AC00E2410F /* Promise+Web3+Eth+GetAbi.swift in Sources */,
 				8113D2CA1FD7E1590074282C /* KeystoreManager.swift in Sources */,
 				817EBB1F2006265400E02EAA /* Base58.swift in Sources */,
 				8984C15A21005AF900C585FE /* Transaction.pb.swift in Sources */,
@@ -1052,6 +1071,7 @@
 				8160E5CE20B8245A0070070B /* IBAN.swift in Sources */,
 				810B0F9C1FEC520500CF0DA2 /* Web3+Methods.swift in Sources */,
 				81A1822520D678590016741F /* Promise+Web3+Eth+GetGasPrice.swift in Sources */,
+				89295188210717F300E2410F /* Promise+Web3+Eth+GetTransactionProof.swift in Sources */,
 				8113DE7C1FD8514400CD8DF1 /* NSRegularExpressionExtension.swift in Sources */,
 				81C5DA2E2074EBF500424CD6 /* ContractABIv2.swift in Sources */,
 				810B0F9E1FEC5B9C00CF0DA2 /* Web3+Eth.swift in Sources */,
@@ -1064,6 +1084,7 @@
 				817EBB23200649E000E02EAA /* RIPEMD160+StackOveflow.swift in Sources */,
 				8116666320455E33008D8AD0 /* Web3+Wallet.swift in Sources */,
 				81DDECCF1FDF004E0063684A /* Web3.swift in Sources */,
+				8929518221070D4800E2410F /* Promise+Web3+Eth+GetCode.swift in Sources */,
 				81A1823420D6E1FD0016741F /* Promise+Web3+Eth+GetBlockByNumber.swift in Sources */,
 				81A1822820D678BF0016741F /* Promise+Web3+Eth+GetAccounts.swift in Sources */,
 				81C5DA312074EC1E00424CD6 /* ContractProtocol.swift in Sources */,
@@ -1079,6 +1100,7 @@
 				81C0FCF220440EB500D82FAF /* Web3+Protocols.swift in Sources */,
 				81C0FCF420440F0900D82FAF /* Web3+Options.swift in Sources */,
 				81A1822E20D67BC30016741F /* Promise+Web3+Eth+GetTransactionReceipt.swift in Sources */,
+				8929517D2106F4FE00E2410F /* Promise+Web3+Eth+GetMetaData.swift in Sources */,
 				81A1824020D79FDB0016741F /* Promise+Web3+Eth+EstimateGas.swift in Sources */,
 				81A1822B20D67A1B0016741F /* Promise+Web3+Eth+GetTransactionDetails.swift in Sources */,
 				815630042007BC8F00A0EC2F /* BIP39+WordLists.swift in Sources */,
@@ -1137,15 +1159,18 @@
 				81D7D97620A3240900A193EC /* EthereumFilterEncodingExtensions.swift in Sources */,
 				41948126203630530065A83B /* Web3+Eth.swift in Sources */,
 				81C5DA262072E14E00424CD6 /* ABIv2Encoding.swift in Sources */,
+				89295189210717F300E2410F /* Promise+Web3+Eth+GetTransactionProof.swift in Sources */,
 				81A1822320D678060016741F /* Promise+Web3+Eth+GetBlockNumber.swift in Sources */,
 				4194812B203630530065A83B /* RLP.swift in Sources */,
 				4194812C203630530065A83B /* KeystoreManager.swift in Sources */,
+				89295186210712AC00E2410F /* Promise+Web3+Eth+GetAbi.swift in Sources */,
 				81D7D97320A31FB700A193EC /* ComparisonExtensions.swift in Sources */,
 				81A1823E20D79C2C0016741F /* Promise+Web3+Eth+SendRawTransaction.swift in Sources */,
 				81A1823D20D79C290016741F /* Promise+Web3+Eth+Call.swift in Sources */,
 				81C5DA12207254F600424CD6 /* ABIv2.swift in Sources */,
 				4194812D203630530065A83B /* EthereumAddress.swift in Sources */,
 				81FB21FF207BB297007F9A83 /* EIP67Code.swift in Sources */,
+				8929517F2106F51500E2410F /* Promise+Web3+Eth+GetMetaData.swift in Sources */,
 				81C5DA0F207254D000424CD6 /* ABIv2Elements.swift in Sources */,
 				81A1821B20D5A6F80016741F /* Promise+HttpProvider.swift in Sources */,
 				81A1823820D6E2BB0016741F /* Promise+Web3+Eth+GetBlockByHash.swift in Sources */,
@@ -1176,11 +1201,13 @@
 				81C5DA322074EC1E00424CD6 /* ContractProtocol.swift in Sources */,
 				81C5DA232072DFE600424CD6 /* ABIv2TypeParser.swift in Sources */,
 				81A1824C20D7DF1B0016741F /* Promise+Web3+Personal+UnlockAccount.swift in Sources */,
+				8929518321070D4C00E2410F /* Promise+Web3+Eth+GetCode.swift in Sources */,
 				41948139203630530065A83B /* LibSecp256k1Extension.swift in Sources */,
 				4194813B203630530065A83B /* NSRegularExpressionExtension.swift in Sources */,
 				81C0FD042044A8A700D82FAF /* Web3+Options.swift in Sources */,
 				81C5DA1E207263D800424CD6 /* ABIv2Parsing.swift in Sources */,
 				81A1823220D68A110016741F /* Promise+Batching.swift in Sources */,
+				8929517E2106F51100E2410F /* Promise+Web3+Eth+GetPeerCount.swift in Sources */,
 				4194813C203630530065A83B /* Base58.swift in Sources */,
 				81C0FD032044A89400D82FAF /* Web3+TransactionIntermediate.swift in Sources */,
 				8103BBCD2077B84400499769 /* PlainKeystore.swift in Sources */,
@@ -1190,6 +1217,7 @@
 				81A1824620D7B91B0016741F /* Promise+Web3+Intermediate+Send.swift in Sources */,
 				81A1822C20D67A1B0016741F /* Promise+Web3+Eth+GetTransactionDetails.swift in Sources */,
 				4194813F203630530065A83B /* Dictionary+Extension.swift in Sources */,
+				892951802106F51E00E2410F /* Promise+Web3+Eth+EstimateGas.swift in Sources */,
 				81C5DA2C2074CA1400424CD6 /* ABIv2Decoding.swift in Sources */,
 				41948140203630530065A83B /* Array+Extension.swift in Sources */,
 				81A1822020D676BC0016741F /* Promise+Web3+Eth+GetTransactionCount.swift in Sources */,

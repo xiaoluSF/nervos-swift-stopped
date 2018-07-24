@@ -23,7 +23,7 @@ extension web3.Eth {
                     if response.error != nil {
                         throw Web3Error.nodeError(response.error!.message)
                     }
-                    throw Web3Error.nodeError("Invalid value from Ethereum node")
+                    throw Web3Error.nodeError("Invalid value from Nervos node")
                 }
                 return value
             }

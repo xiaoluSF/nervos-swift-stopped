@@ -28,28 +28,79 @@ class nervos_TestGetMethod: XCTestCase {
 //        guard case .success(let currentPeerCount) = peerCount else {
 //            return XCTFail()
 //        }
-        let blockNumber = web3.eth.getBlockNumber()
-        guard case .success(let currentBlock) = blockNumber else {return XCTFail()}
-        print("current block number is " + currentBlock.description)
+//        let blockNumber = web3.eth.getBlockNumber()
+//        guard case .success(let currentBlock) = blockNumber else {return XCTFail()}
+//        print("current block number is " + currentBlock.description)
 //        print("currentPeerCount is  " + currentPeerCount.description)
-        print((BigUInt(88) + currentBlock).description)
-        
-        let coldWalletAddress = EthereumAddress("0x6782CdeF6A4A056d412775EE6081d32B2bf90287")!
+//        print((BigUInt(88) + currentBlock).description)
+//
+//        let coldWalletAddress = EthereumAddress("0x6782CdeF6A4A056d412775EE6081d32B2bf90287")!
 
-        let nt = NervosTransaction.init(to: coldWalletAddress, nonce: BigUInt(98), quota: BigUInt(200000), valid_until_block: (BigUInt(88) + currentBlock), version: BigUInt(0), data: Data.fromHex("")!, value: Data.fromHex("2")!, chain_id: BigUInt(1))
-        
+//        let nt = NervosTransaction.init(to: coldWalletAddress, nonce: BigUInt(208), quota: BigUInt(200000), valid_until_block: (BigUInt(88) + currentBlock), version: BigUInt(0), data: Data.fromHex("")!, value: Data.fromHex("4")!, chain_id: BigUInt(1))
+
 //        print(try! nt.signNervosTransaction(privateKey: "b5fd0cf3fc298289bad33f04b0f99eabaa12f01c1b6062347ea016315c86c974"))
+
+//        let result = web3.eth.sendRawTransaction(nt, privateKey: "b5fd0cf3fc298289bad33f04b0f99eabaa12f01c1b6062347ea016315c86c974")
+//        switch result {
+//        case .success(let r):
+//            print(r.hash)
+//            print(r.transaction.description)
+//            break
+//        case .failure(let error):
+//            print(error.localizedDescription)
+//            break
+//        }
         
-        let result = web3.eth.sendRawTransaction(nt, privateKey: "b5fd0cf3fc298289bad33f04b0f99eabaa12f01c1b6062347ea016315c86c974")
-        switch result {
-        case .success(let r):
-            print(r.hash)
-            print(r.transaction.description)
-            break
-        case .failure(let error):
-            print(error.localizedDescription)
-            break
-        }
+//        let receipt = web3.eth.getTransactionReceipt("0x3fc7e352fbb16784b05a3b1f7931c8217550ce63ee30f5d1a932257e357b30db")
+//        switch receipt {
+//        case .success(let re):
+//            print(re)
+//        case .failure(let error):
+//            print(error.localizedDescription)
+//        }
+        
+//        let nervosBlock = web3.eth.getBlockByNumber(BigUInt(726117),fullTransactions:false)
+//        switch nervosBlock {
+//        case .success(let nb):
+//            print(nb)
+//            break
+//        case .failure(let error):
+//            print(error.localizedDescription)
+//        }
+        
+//        let mateData = web3.eth.getMetaData(BigUInt(726117))
+//        switch mateData {
+//        case .success(let metaData):
+//            print(metaData)
+//            break
+//        case .failure(let error):
+//            print(error.localizedDescription)
+//        }
+        
+//        let transaction = web3.eth.getTransactionDetails("0x3fc7e352fbb16784b05a3b1f7931c8217550ce63ee30f5d1a932257e357b30db")
+//        switch transaction {
+//        case .success(let t):
+//            print(t)
+//        case .failure(let error):
+//            print(error.localizedDescription)
+//        }
+        
+//        let transactionCount = web3.eth.getBalance(address: EthereumAddress("0x6782CdeF6A4A056d412775EE6081d32B2bf90287")!)
+//        switch transactionCount {
+//        case .success(let t):
+//            print(t)
+//        case .failure(let error):
+//            print(error.localizedDescription)
+//        }
+        
+//        let transactionProof = web3.eth.getTransactionProof("0x3fc7e352fbb16784b05a3b1f7931c8217550ce63ee30f5d1a932257e357b30db")
+//        switch transactionProof{
+//        case .success(let r):
+//            print(r.toHexString())
+//        case .failure(let error):
+//            print(error.localizedDescription)
+//        }
+        
     }
     
     func testPerformanceExample() {

@@ -20,7 +20,7 @@ public enum JSONRPCmethod: String, Encodable {
     case getBalance = "getBalance"
     case getCode = "getCode"
     case getStorageAt = "getStorageAt"
-    case getTransactionByHash = "getTransactionByHash"
+    case getTransaction = "getTransaction"
     case getTransactionReceipt = "getTransactionReceipt"
     case getAccounts = "accounts"
     case getBlockByHash = "getBlockByHash"
@@ -28,7 +28,9 @@ public enum JSONRPCmethod: String, Encodable {
     case sign = "sign"
     case unlockAccount = "personal_unlockAccount"
     case getLogs = "getLogs"
-    
+    case getMetaData = "getMetaData"
+    case getAbi = "getAbi"
+    case getTransactionProof = "getTransactionProof"
     
     public var requiredNumOfParameters: Int {
         get {
