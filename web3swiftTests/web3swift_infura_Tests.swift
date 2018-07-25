@@ -26,56 +26,56 @@ class web3swift_infura_Tests: XCTestCase {
     }
     
     func testGetBlockByHash() {
-        let web3 = Web3.InfuraMainnetWeb3()
-        let response = web3.eth.getBlockByHash("0x6d05ba24da6b7a1af22dc6cc2a1fe42f58b2a5ea4c406b19c8cf672ed8ec0695", fullTransactions: true)
-        switch response {
-        case .failure(_):
-            XCTFail()
-        case .success(let result):
-            print(result)
-        }
+//        let web3 = Web3.InfuraMainnetWeb3()
+//        let response = web3.eth.getBlockByHash("0x6d05ba24da6b7a1af22dc6cc2a1fe42f58b2a5ea4c406b19c8cf672ed8ec0695", fullTransactions: true)
+//        switch response {
+//        case .failure(_):
+//            XCTFail()
+//        case .success(let result):
+//            print(result)
+//        }
     }
     
     func testGetBlockByNumber1() {
-        let web3 = Web3.InfuraMainnetWeb3()
-        let response = web3.eth.getBlockByNumber("latest", fullTransactions: true)
-        switch response {
-        case .failure(_):
-            XCTFail()
-        case .success(let result):
-            print(result)
-        }
+//        let web3 = Web3.InfuraMainnetWeb3()
+//        let response = web3.eth.getBlockByNumber("latest", fullTransactions: true)
+//        switch response {
+//        case .failure(_):
+//            XCTFail()
+//        case .success(let result):
+//            print(result)
+//        }
     }
     
     func testGetBlockByNumber2() {
-        let web3 = Web3.InfuraMainnetWeb3()
-        let response = web3.eth.getBlockByNumber(UInt64(5184323), fullTransactions: true)
-        switch response {
-        case .failure(_):
-            XCTFail()
-        case .success(let result):
-            print(result)
-            let transactions = result.transactions
-            for transaction in transactions {
-                switch transaction {
-                case .transaction(let tx):
-                    print(String(describing: tx))
-                default:
-                    break
-                }
-            }
-        }
+//        let web3 = Web3.InfuraMainnetWeb3()
+//        let response = web3.eth.getBlockByNumber(UInt64(5184323), fullTransactions: true)
+//        switch response {
+//        case .failure(_):
+//            XCTFail()
+//        case .success(let result):
+//            print(result)
+//            let transactions = result.transactions
+//            for transaction in transactions {
+//                switch transaction {
+//                case .transaction(let tx):
+//                    print(String(describing: tx))
+//                default:
+//                    break
+//                }
+//            }
+//        }
     }
     
     func testGetBlockByNumber3() {
-        let web3 = Web3.InfuraMainnetWeb3()
-        let response = web3.eth.getBlockByNumber(UInt64(1000000000), fullTransactions: true)
-        switch response {
-        case .failure(_):
-            break
-        case .success(_):
-            XCTFail()
-        }
+//        let web3 = Web3.InfuraMainnetWeb3()
+//        let response = web3.eth.getBlockByNumber(UInt64(1000000000), fullTransactions: true)
+//        switch response {
+//        case .failure(_):
+//            break
+//        case .success(_):
+//            XCTFail()
+//        }
     }
     
 //    func testGasPrice() {
