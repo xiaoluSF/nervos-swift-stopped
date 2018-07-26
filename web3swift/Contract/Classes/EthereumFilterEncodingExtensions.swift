@@ -1,6 +1,6 @@
 //
 //  EthereumStringEncodingExtensions.swift
-//  web3swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 09.05.2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.

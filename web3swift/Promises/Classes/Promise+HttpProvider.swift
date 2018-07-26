@@ -1,6 +1,6 @@
 //
 //  Promise+HttpProvider.swift
-//  web3swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 16.06.2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -9,7 +9,7 @@
 import Foundation
 import PromiseKit
 
-extension Web3HttpProvider {
+extension NervosHttpProvider {
     
     static func post(_ request: JSONRPCrequest, providerURL: URL, queue: DispatchQueue = .main, session: URLSession) -> Promise<JSONRPCresponse> {
         let rp = Promise<Data>.pending()
@@ -33,7 +33,7 @@ extension Web3HttpProvider {
                         return
                     }
                     guard data != nil else {
-                        rp.resolver.reject(Web3Error.nodeError("Node response is empty"))
+                        rp.resolver.reject(NervosError.nodeError("Node response is empty"))
                         return
                     }
                     rp.resolver.fulfill(data!)
@@ -48,7 +48,7 @@ extension Web3HttpProvider {
             }.map(on: queue){ (data: Data) throws -> JSONRPCresponse in
                 let parsedResponse = try JSONDecoder().decode(JSONRPCresponse.self, from: data)
                 if parsedResponse.error != nil {
-                    throw Web3Error.nodeError("Received an error message from node\n" + String(describing: parsedResponse.error!))
+                    throw NervosError.nodeError("Received an error message from node\n" + String(describing: parsedResponse.error!))
                 }
                 return parsedResponse
             }
@@ -77,9 +77,9 @@ extension Web3HttpProvider {
                     }
                     print("response: " + (response?.description)!)
 //                    print(data?.toHexString())
-                    print(String(data: data!, encoding: .utf8))
+//                    print(String(data: data!, encoding: .utf8))
                     guard data != nil, data!.count != 0 else {
-                        rp.resolver.reject(Web3Error.nodeError("Node response is empty"))
+                        rp.resolver.reject(NervosError.nodeError("Node response is empty"))
                         return
                     }
                     rp.resolver.fulfill(data!)
@@ -101,14 +101,14 @@ extension Web3HttpProvider {
     
     public func sendAsync(_ request: JSONRPCrequest, queue: DispatchQueue = .main) -> Promise<JSONRPCresponse> {
         if request.method == nil {
-            return Promise(error: Web3Error.nodeError("RPC method is nill"))
+            return Promise(error: NervosError.nodeError("RPC method is nill"))
         }
         
-        return Web3HttpProvider.post(request, providerURL: self.url, queue: queue, session: self.session)
+        return NervosHttpProvider.post(request, providerURL: self.url, queue: queue, session: self.session)
     }
     
     public func sendAsync(_ requests: JSONRPCrequestBatch, queue: DispatchQueue = .main) -> Promise<JSONRPCresponseBatch> {
-        return Web3HttpProvider.post(requests, providerURL: self.url, queue: queue, session: self.session)
+        return NervosHttpProvider.post(requests, providerURL: self.url, queue: queue, session: self.session)
     }
 }
 

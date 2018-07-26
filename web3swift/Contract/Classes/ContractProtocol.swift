@@ -1,6 +1,6 @@
 //
 //  ContractProtocol.swift
-//  web3swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 04.04.2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -11,11 +11,11 @@ import BigInt
 
 public protocol ContractProtocol {
     var address: EthereumAddress? {get set}
-    var options: Web3Options? {get set}
+    var options: NervosOptions? {get set}
     var allMethods: [String] {get}
     var allEvents: [String] {get}
-    func deploy(bytecode:Data, parameters: [AnyObject], extraData: Data, options: Web3Options?) -> EthereumTransaction?
-    func method(_ method:String, parameters: [AnyObject], extraData: Data, options: Web3Options?) -> EthereumTransaction?
+    func deploy(bytecode:Data, parameters: [AnyObject], extraData: Data, options: NervosOptions?) -> EthereumTransaction?
+    func method(_ method:String, parameters: [AnyObject], extraData: Data, options: NervosOptions?) -> EthereumTransaction?
     init?(_ abiString: String, at: EthereumAddress?)
     func decodeReturnData(_ method:String, data: Data) -> [String:Any]?
     func decodeInputData(_ method:String, data: Data) -> [String:Any]?

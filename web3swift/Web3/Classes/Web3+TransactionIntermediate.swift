@@ -1,6 +1,6 @@
 //
-//  Web3+TransactionIntermediate.swift
-//  web3swift-iOS
+//  Nervos+TransactionIntermediate.swift
+//  nervosswift-iOS
 //
 //  Created by Alexander Vlasov on 26.02.2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -12,122 +12,122 @@ import BigInt
 import PromiseKit
 fileprivate typealias PromiseResult = PromiseKit.Result
 
-extension web3.web3contract {
+extension nervos.nervoscontract {
 
     public class TransactionIntermediate{
         public var transaction:EthereumTransaction
         public var contract: ContractProtocol
         public var method: String
-        public var options: Web3Options? = Web3Options.defaultOptions()
-        var web3: web3
-        public init (transaction: EthereumTransaction, web3 web3Instance: web3, contract: ContractProtocol, method: String, options: Web3Options?) {
+        public var options: NervosOptions? = NervosOptions.defaultOptions()
+        var nervos: nervos
+        public init (transaction: EthereumTransaction, nervos nervosInstance: nervos, contract: ContractProtocol, method: String, options: NervosOptions?) {
             self.transaction = transaction
-            self.web3 = web3Instance
+            self.nervos = nervosInstance
             self.contract = contract
             self.contract.options = options
             self.method = method
-            self.options = Web3Options.merge(web3.options, with: options)
-            if self.web3.provider.network != nil {
-                self.transaction.chainID = self.web3.provider.network?.chainID
+            self.options = NervosOptions.merge(nervos.options, with: options)
+            if self.nervos.provider.network != nil {
+                self.transaction.chainID = self.nervos.provider.network?.chainID
             }
         }
         
         @available(*, deprecated)
         public func setNonce(_ nonce: BigUInt) throws {
             self.transaction.nonce = nonce
-            if (self.web3.provider.network != nil) {
-                self.transaction.chainID = self.web3.provider.network?.chainID
+            if (self.nervos.provider.network != nil) {
+                self.transaction.chainID = self.nervos.provider.network?.chainID
             }
         }
         
         
-        public func send(password: String = "BANKEXFOUNDATION", options: Web3Options? = nil, onBlock: String = "pending") -> Result<TransactionSendingResult, Web3Error> {
+        public func send(password: String = "BANKEXFOUNDATION", options: NervosOptions? = nil, onBlock: String = "pending") -> Result<TransactionSendingResult, NervosError> {
             do {
                 let result = try self.sendPromise(password: password, options: options, onBlock: onBlock).wait()
                 return Result(result)
             } catch {
-                if let err = error as? Web3Error {
+                if let err = error as? NervosError {
                     return Result.failure(err)
                 }
-                return Result.failure(Web3Error.generalError(error))
+                return Result.failure(NervosError.generalError(error))
             }
         }
         
-        public func call(options: Web3Options?, onBlock: String = "latest") -> Result<[String:Any], Web3Error> {
+        public func call(options: NervosOptions?, onBlock: String = "latest") -> Result<[String:Any], NervosError> {
             do {
                 let result = try self.callPromise(options: options, onBlock: onBlock).wait()
                 return Result(result)
             } catch {
-                if let err = error as? Web3Error {
+                if let err = error as? NervosError {
                     return Result.failure(err)
                 }
-                return Result.failure(Web3Error.generalError(error))
+                return Result.failure(NervosError.generalError(error))
             }
         }
         
-//        public func estimateGas(options: Web3Options?, onBlock: String = "latest") -> Result<BigUInt, Web3Error> {
+//        public func estimateGas(options: NervosOptions?, onBlock: String = "latest") -> Result<BigUInt, NervosError> {
 //            do {
 //                let result = try self.estimateGasPromise(options: options, onBlock: onBlock).wait()
 //                return Result(result)
 //            } catch {
-//                if let err = error as? Web3Error {
+//                if let err = error as? NervosError {
 //                    return Result.failure(err)
 //                }
-//                return Result.failure(Web3Error.generalError(error))
+//                return Result.failure(NervosError.generalError(error))
 //            }
 //        }
 
-        func assemble(options: Web3Options? = nil, onBlock: String = "pending") -> Result<EthereumTransaction, Web3Error> {
+        func assemble(options: NervosOptions? = nil, onBlock: String = "pending") -> Result<EthereumTransaction, NervosError> {
             do {
                 let result = try self.assemblePromise(options: options, onBlock: onBlock).wait()
                 return Result(result)
             } catch {
-                if let err = error as? Web3Error {
+                if let err = error as? NervosError {
                     return Result.failure(err)
                 }
-                return Result.failure(Web3Error.generalError(error))
+                return Result.failure(NervosError.generalError(error))
             }
         }
    
     }
 }
 
-extension web3.web3contract.TransactionIntermediate {
+extension nervos.nervoscontract.TransactionIntermediate {
     
-    func assemblePromise(options: Web3Options? = nil, onBlock: String = "pending") -> Promise<EthereumTransaction> {
+    func assemblePromise(options: NervosOptions? = nil, onBlock: String = "pending") -> Promise<EthereumTransaction> {
         var assembledTransaction : EthereumTransaction = self.transaction
-        let queue = self.web3.requestDispatcher.queue
+        let queue = self.nervos.requestDispatcher.queue
         let returnPromise = Promise<EthereumTransaction> { seal in
-            guard let mergedOptions = Web3Options.merge(self.options, with: options) else {
-                seal.reject(Web3Error.inputError("Provided options are invalid"))
+            guard let mergedOptions = NervosOptions.merge(self.options, with: options) else {
+                seal.reject(NervosError.inputError("Provided options are invalid"))
                 return
             }
             guard let from = mergedOptions.from else {
-                seal.reject(Web3Error.inputError("No 'from' field provided"))
+                seal.reject(NervosError.inputError("No 'from' field provided"))
                 return
             }
-            var optionsForGasEstimation = Web3Options()
+            var optionsForGasEstimation = NervosOptions()
             optionsForGasEstimation.from = mergedOptions.from
             optionsForGasEstimation.to = mergedOptions.to
             optionsForGasEstimation.value = mergedOptions.value
-            let getNoncePromise : Promise<BigUInt> = self.web3.eth.getTransactionCountPromise(address: from, onBlock: onBlock)
-//            let gasEstimatePromise : Promise<BigUInt> = self.web3.eth.estimateGasPromise(assembledTransaction, options: optionsForGasEstimation, onBlock: onBlock)
-//            let gasPricePromise : Promise<BigUInt> = self.web3.eth.getGasPricePromise()
+            let getNoncePromise : Promise<BigUInt> = self.nervos.eth.getTransactionCountPromise(address: from, onBlock: onBlock)
+//            let gasEstimatePromise : Promise<BigUInt> = self.nervos.eth.estimateGasPromise(assembledTransaction, options: optionsForGasEstimation, onBlock: onBlock)
+//            let gasPricePromise : Promise<BigUInt> = self.nervos.eth.getGasPricePromise()
             var promisesToFulfill: [Promise<BigUInt>] = [getNoncePromise]
             when(resolved: getNoncePromise).map(on: queue, { (results:[PromiseResult<BigUInt>]) throws -> EthereumTransaction in
                 
                 promisesToFulfill.removeAll()
                 guard case .fulfilled(let nonce) = results[0] else {
-                    throw Web3Error.processingError("Failed to fetch nonce")
+                    throw NervosError.processingError("Failed to fetch nonce")
                 }
 //                guard case .fulfilled(let gasEstimate) = results[1] else {
-//                    throw Web3Error.processingError("Failed to fetch gas estimate")
+//                    throw NervosError.processingError("Failed to fetch gas estimate")
 //                }
 //                guard case .fulfilled(let gasPrice) = results[2] else {
-//                    throw Web3Error.processingError("Failed to fetch gas price")
+//                    throw NervosError.processingError("Failed to fetch gas price")
 //                }
-//                guard let estimate = Web3Options.smartMergeGasLimit(originalOptions: options, extraOptions: mergedOptions, gasEstimate: gasEstimate) else {
-//                    throw Web3Error.processingError("Failed to calculate gas estimate that satisfied options")
+//                guard let estimate = NervosOptions.smartMergeGasLimit(originalOptions: options, extraOptions: mergedOptions, gasEstimate: gasEstimate) else {
+//                    throw NervosError.processingError("Failed to calculate gas estimate that satisfied options")
 //                }
                 assembledTransaction.nonce = nonce
 //                assembledTransaction.gasLimit = estimate
@@ -148,32 +148,32 @@ extension web3.web3contract.TransactionIntermediate {
         return returnPromise
     }
     
-    func sendPromise(password:String = "BANKEXFOUNDATION", options: Web3Options? = nil, onBlock: String = "pending") -> Promise<TransactionSendingResult>{
-        let queue = self.web3.requestDispatcher.queue
+    func sendPromise(password:String = "BANKEXFOUNDATION", options: NervosOptions? = nil, onBlock: String = "pending") -> Promise<TransactionSendingResult>{
+        let queue = self.nervos.requestDispatcher.queue
         return self.assemblePromise(options: options, onBlock: onBlock).then(on: queue) { transaction throws -> Promise<TransactionSendingResult> in
-            guard let mergedOptions = Web3Options.merge(self.options, with: options) else {
-                throw Web3Error.inputError("Provided options are invalid")
+            guard let mergedOptions = NervosOptions.merge(self.options, with: options) else {
+                throw NervosError.inputError("Provided options are invalid")
             }
-            var cleanedOptions = Web3Options()
+            var cleanedOptions = NervosOptions()
             cleanedOptions.from = mergedOptions.from
             cleanedOptions.to = mergedOptions.to
-            return self.web3.eth.sendTransactionPromise(transaction, options: cleanedOptions, password: password)
+            return self.nervos.eth.sendTransactionPromise(transaction, options: cleanedOptions, password: password)
         }
     }
     
-    func callPromise(options: Web3Options? = nil, onBlock: String = "latest") -> Promise<[String: Any]>{
+    func callPromise(options: NervosOptions? = nil, onBlock: String = "latest") -> Promise<[String: Any]>{
         let assembledTransaction : EthereumTransaction = self.transaction
-        let queue = self.web3.requestDispatcher.queue
+        let queue = self.nervos.requestDispatcher.queue
         let returnPromise = Promise<[String:Any]> { seal in
-            guard let mergedOptions = Web3Options.merge(self.options, with: options) else {
-                seal.reject(Web3Error.inputError("Provided options are invalid"))
+            guard let mergedOptions = NervosOptions.merge(self.options, with: options) else {
+                seal.reject(NervosError.inputError("Provided options are invalid"))
                 return
             }
-            var optionsForCall = Web3Options()
+            var optionsForCall = NervosOptions()
             optionsForCall.from = mergedOptions.from
             optionsForCall.to = mergedOptions.to
             optionsForCall.value = mergedOptions.value
-            let callPromise : Promise<Data> = self.web3.eth.callPromise(assembledTransaction, options: optionsForCall, onBlock: onBlock)
+            let callPromise : Promise<Data> = self.nervos.eth.callPromise(assembledTransaction, options: optionsForCall, onBlock: onBlock)
             callPromise.done(on: queue) {(data:Data) throws in
                     do {
                         if (self.method == "fallback") {
@@ -183,7 +183,7 @@ extension web3.web3contract.TransactionIntermediate {
                         }
                         guard let decodedData = self.contract.decodeReturnData(self.method, data: data) else
                         {
-                            throw Web3Error.processingError("Can not decode returned parameters")
+                            throw NervosError.processingError("Can not decode returned parameters")
                         }
                         seal.fulfill(decodedData)
                     } catch{
@@ -196,19 +196,19 @@ extension web3.web3contract.TransactionIntermediate {
         return returnPromise
     }
     
-//    func estimateGasPromise(options: Web3Options? = nil, onBlock: String = "latest") -> Promise<BigUInt>{
+//    func estimateGasPromise(options: NervosOptions? = nil, onBlock: String = "latest") -> Promise<BigUInt>{
 //        let assembledTransaction : EthereumTransaction = self.transaction
-//        let queue = self.web3.requestDispatcher.queue
+//        let queue = self.nervos.requestDispatcher.queue
 //        let returnPromise = Promise<BigUInt> { seal in
-//            guard let mergedOptions = Web3Options.merge(self.options, with: options) else {
-//                seal.reject(Web3Error.inputError("Provided options are invalid"))
+//            guard let mergedOptions = NervosOptions.merge(self.options, with: options) else {
+//                seal.reject(NervosError.inputError("Provided options are invalid"))
 //                return
 //            }
-//            var optionsForGasEstimation = Web3Options()
+//            var optionsForGasEstimation = NervosOptions()
 //            optionsForGasEstimation.from = mergedOptions.from
 //            optionsForGasEstimation.to = mergedOptions.to
 //            optionsForGasEstimation.value = mergedOptions.value
-//            let promise = self.web3.eth.estimateGasPromise(assembledTransaction, options: optionsForGasEstimation, onBlock: onBlock)
+//            let promise = self.nervos.eth.estimateGasPromise(assembledTransaction, options: optionsForGasEstimation, onBlock: onBlock)
 //            promise.done(on: queue) {(estimate: BigUInt) in
 //                    seal.fulfill(estimate)
 //                }.catch(on: queue) {err in

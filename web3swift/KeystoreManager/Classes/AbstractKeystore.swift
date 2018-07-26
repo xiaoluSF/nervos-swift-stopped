@@ -1,6 +1,6 @@
 //
 //  AbstractKeystore.swift
-//  web3swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 10.01.2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias TransactionIntermediate = web3.web3contract.TransactionIntermediate
+public typealias TransactionIntermediate = nervos.nervoscontract.TransactionIntermediate
 
 
 public protocol AbstractKeystore {

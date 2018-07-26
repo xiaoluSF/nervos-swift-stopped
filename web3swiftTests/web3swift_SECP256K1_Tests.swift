@@ -1,6 +1,6 @@
 //
-//  web3swift_SECP256K1_Tests.swift
-//  web3swift-iOS_Tests
+//  nervosswift_SECP256K1_Tests.swift
+//  nervosswift-iOS_Tests
 //
 //  Created by Anton Grigoriev on 02.07.2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -17,7 +17,7 @@ import secp256k1_ios
 
 @testable import web3swift_iOS
 
-class web3swift_SECP256K1_Tests: XCTestCase {
+class nervosswift_SECP256K1_Tests: XCTestCase {
     
     func testNonDeterministicSignature() {
         var unsuccesfulNondeterministic = 0;

@@ -1,6 +1,6 @@
 //
 //  NSRegularExpressionExtension.swift
-//  web3swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 06.12.2017.
 //  Copyright © 2017 Bankex Foundation. All rights reserved.

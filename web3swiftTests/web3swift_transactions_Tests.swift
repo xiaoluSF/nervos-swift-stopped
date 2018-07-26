@@ -1,6 +1,6 @@
 //
-//  web3swiftTransactionsTests.swift
-//  web3swift-iOS_Tests
+//  nervosswiftTransactionsTests.swift
+//  nervosswift-iOS_Tests
 //
 //  Created by Георгий Фесенко on 02/07/2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -14,7 +14,7 @@ import secp256k1_ios
 
 @testable import web3swift_iOS
 
-class web3swift_transactions_Tests: XCTestCase {
+class nervosswift_transactions_Tests: XCTestCase {
     
     func testTransaction() {
         do {
@@ -28,14 +28,14 @@ class web3swift_transactions_Tests: XCTestCase {
                                                   r: BigUInt(0),
                                                   s: BigUInt(0))
             let privateKeyData = Data.fromHex("0x4646464646464646464646464646464646464646464646464646464646464646")!
-            let publicKey = Web3.Utils.privateToPublic(privateKeyData, compressed: false)
-            let sender = Web3.Utils.publicToAddress(publicKey!)
+            let publicKey = Nervos.Utils.privateToPublic(privateKeyData, compressed: false)
+            let sender = Nervos.Utils.publicToAddress(publicKey!)
             transaction.chainID = BigUInt(1)
             print(transaction)
             let hash = transaction.hashForSignature(chainID: BigUInt(1))
             let expectedHash = "0xdaf5a779ae972f972197303d7b574746c7ef83eadac0f2791ad23db92e4c8e53".stripHexPrefix()
             XCTAssert(hash!.toHexString() == expectedHash, "Transaction signature failed")
-            try Web3Signer.EIP155Signer.sign(transaction: &transaction, privateKey: privateKeyData, useExtraEntropy: false)
+            try NervosSigner.EIP155Signer.sign(transaction: &transaction, privateKey: privateKeyData, useExtraEntropy: false)
             print(transaction)
             XCTAssert(transaction.v == UInt8(37), "Transaction signature failed")
             XCTAssert(sender == transaction.sender)
@@ -47,14 +47,14 @@ class web3swift_transactions_Tests: XCTestCase {
     }
     
     func testEthSendExample() {
-        let web3 = Web3.InfuraMainnetWeb3()
+        let nervos = Nervos.InfuraMainnetNervos()
         let sendToAddress = EthereumAddress("0x6394b37Cf80A7358b38068f0CA4760ad49983a1B")!
         let tempKeystore = try! EthereumKeystoreV3(password: "")
         let keystoreManager = KeystoreManager([tempKeystore!])
-        web3.addKeystoreManager(keystoreManager)
-        let contract = web3.contract(Web3.Utils.coldWalletABI, at: sendToAddress, abiVersion: 2)
-        var options = Web3Options.defaultOptions()
-        options.value = Web3.Utils.parseToBigUInt("1.0", units: .eth)
+        nervos.addKeystoreManager(keystoreManager)
+        let contract = nervos.contract(Nervos.Utils.coldWalletABI, at: sendToAddress, abiVersion: 2)
+        var options = NervosOptions.defaultOptions()
+        options.value = Nervos.Utils.parseToBigUInt("1.0", units: .eth)
         options.from = keystoreManager.addresses?.first
         let intermediate = contract?.method("fallback", options: options)
         guard let result = intermediate?.send(password: "") else {return XCTFail()}
@@ -69,8 +69,8 @@ class web3swift_transactions_Tests: XCTestCase {
     }
     
     func testTransactionReceipt() {
-        let web3 = Web3.InfuraMainnetWeb3()
-        let result = web3.eth.getTransactionReceipt("0x83b2433606779fd756417a863f26707cf6d7b2b55f5d744a39ecddb8ca01056e")
+        let nervos = Nervos.InfuraMainnetNervos()
+        let result = nervos.eth.getTransactionReceipt("0x83b2433606779fd756417a863f26707cf6d7b2b55f5d744a39ecddb8ca01056e")
         switch result {
         case .failure(let error):
             print(error)
@@ -96,13 +96,13 @@ class web3swift_transactions_Tests: XCTestCase {
 //    func testSendETH() {
 //        guard let keystoreData = getKeystoreData() else {return}
 //        guard let keystoreV3 = EthereumKeystoreV3.init(keystoreData) else {return XCTFail()}
-//        let web3Rinkeby = Web3.InfuraRinkebyWeb3()
+//        let nervosRinkeby = Nervos.InfuraRinkebyNervos()
 //        let keystoreManager = KeystoreManager.init([keystoreV3])
-//        web3Rinkeby.addKeystoreManager(keystoreManager)
-//        guard case .success(let gasPriceRinkeby) = web3Rinkeby.eth.getGasPrice() else {return}
+//        nervosRinkeby.addKeystoreManager(keystoreManager)
+//        guard case .success(let gasPriceRinkeby) = nervosRinkeby.eth.getGasPrice() else {return}
 //        let sendToAddress = EthereumAddress("0x6394b37Cf80A7358b38068f0CA4760ad49983a1B")!
-//        guard let intermediate = web3Rinkeby.eth.sendETH(to: sendToAddress, amount: "0.001") else {return XCTFail()}
-//        var options = Web3Options.defaultOptions()
+//        guard let intermediate = nervosRinkeby.eth.sendETH(to: sendToAddress, amount: "0.001") else {return XCTFail()}
+//        var options = NervosOptions.defaultOptions()
 //        options.from = keystoreV3.addresses?.first
 //        options.gasPrice = gasPriceRinkeby
 //        let result = intermediate.send(password: "BANKEXFOUNDATION", options: options)
@@ -117,15 +117,15 @@ class web3swift_transactions_Tests: XCTestCase {
     
     func testTokenBalanceTransferOnMainNet() {
         // BKX TOKEN
-        let web3 = Web3.InfuraMainnetWeb3()
+        let nervos = Nervos.InfuraMainnetNervos()
         let coldWalletAddress = EthereumAddress("0x6394b37Cf80A7358b38068f0CA4760ad49983a1B")!
         let contractAddress = EthereumAddress("0x45245bc59219eeaaf6cd3f382e078a461ff9de7b")!
-        var options = Web3Options()
+        var options = NervosOptions()
         options.from = coldWalletAddress
         let tempKeystore = try! EthereumKeystoreV3(password: "")
         let keystoreManager = KeystoreManager([tempKeystore!])
-        web3.addKeystoreManager(keystoreManager)
-        let contract = web3.contract(Web3.Utils.erc20ABI, at: contractAddress, abiVersion: 2)!
+        nervos.addKeystoreManager(keystoreManager)
+        let contract = nervos.contract(Nervos.Utils.erc20ABI, at: contractAddress, abiVersion: 2)!
         let bkxBalanceSend = contract.method("transfer", parameters: [coldWalletAddress, BigUInt(1)] as [AnyObject], options: options)!.call(options: nil)
         switch bkxBalanceSend {
         case .success(let result):
@@ -138,13 +138,13 @@ class web3swift_transactions_Tests: XCTestCase {
     
 //    func testTokenBalanceTransferOnMainNetUsingConvenience() {
 //        // BKX TOKEN
-//        let web3 = Web3.InfuraMainnetWeb3()
+//        let nervos = Nervos.InfuraMainnetNervos()
 //        let coldWalletAddress = EthereumAddress("0x6394b37Cf80A7358b38068f0CA4760ad49983a1B")!
 //        let contractAddress = EthereumAddress("0x45245bc59219eeaaf6cd3f382e078a461ff9de7b")!
 //        let tempKeystore = try! EthereumKeystoreV3(password: "")
 //        let keystoreManager = KeystoreManager([tempKeystore!])
-//        web3.addKeystoreManager(keystoreManager)
-//        let intermediate = web3.eth.sendERC20tokensWithNaturalUnits(tokenAddress:contractAddress, from: coldWalletAddress, to: coldWalletAddress, amount: "1.0")
+//        nervos.addKeystoreManager(keystoreManager)
+//        let intermediate = nervos.eth.sendERC20tokensWithNaturalUnits(tokenAddress:contractAddress, from: coldWalletAddress, to: coldWalletAddress, amount: "1.0")
 //        let gasEstimate = intermediate!.estimateGas(options: nil)
 //        switch gasEstimate {
 //        case .success(let result):
@@ -153,7 +153,7 @@ class web3swift_transactions_Tests: XCTestCase {
 //            print(error)
 //            XCTFail()
 //        }
-//        var options = Web3Options();
+//        var options = NervosOptions();
 //        options.gasLimit = gasEstimate.value!
 //        let bkxBalanceSend = intermediate!.call(options: options)
 //        switch bkxBalanceSend {

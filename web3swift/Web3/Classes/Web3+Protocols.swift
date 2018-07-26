@@ -1,6 +1,6 @@
 //
-//  Web3+Protocols.swift
-//  web3swift-iOS
+//  Nervos+Protocols.swift
+//  nervosswift-iOS
 //
 //  Created by Alexander Vlasov on 26.02.2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -20,10 +20,10 @@ public protocol EventParserResultProtocol {
 }
 
 public protocol EventParserProtocol {
-    func parseTransaction(_ transaction: EthereumTransaction) -> Result<[EventParserResultProtocol], Web3Error>
-    func parseTransactionByHash(_ hash: Data) -> Result<[EventParserResultProtocol], Web3Error>
-    func parseBlock(_ block: Block) -> Result<[EventParserResultProtocol], Web3Error>
-    func parseBlockByNumber(_ blockNumber: UInt64) -> Result<[EventParserResultProtocol], Web3Error>
+    func parseTransaction(_ transaction: EthereumTransaction) -> Result<[EventParserResultProtocol], NervosError>
+    func parseTransactionByHash(_ hash: Data) -> Result<[EventParserResultProtocol], NervosError>
+    func parseBlock(_ block: Block) -> Result<[EventParserResultProtocol], NervosError>
+    func parseBlockByNumber(_ blockNumber: UInt64) -> Result<[EventParserResultProtocol], NervosError>
     func parseTransactionPromise(_ transaction: EthereumTransaction) -> Promise<[EventParserResultProtocol]>
     func parseTransactionByHashPromise(_ hash: Data) -> Promise<[EventParserResultProtocol]>
     func parseBlockByNumberPromise(_ blockNumber: UInt64) -> Promise<[EventParserResultProtocol]>

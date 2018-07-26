@@ -1,6 +1,6 @@
 //
-//  web3swiftRLPTests.swift
-//  web3swift-iOS_Tests
+//  nervosswiftRLPTests.swift
+//  nervosswift-iOS_Tests
 //
 //  Created by Георгий Фесенко on 02/07/2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -10,7 +10,7 @@ import XCTest
 import BigInt
 
 @testable import web3swift_iOS
-class web3swift_RLP_Tests: XCTestCase {
+class nervosswift_RLP_Tests: XCTestCase {
     
     func testRLPencodeShortString() {
         let testString = "dog"
