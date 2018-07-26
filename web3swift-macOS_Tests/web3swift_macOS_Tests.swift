@@ -1,6 +1,6 @@
 //
-//  web3swift_macOS_Tests.swift
-//  web3swift-macOS_Tests
+//  nervosswift_macOS_Tests.swift
+//  nervosswift-macOS_Tests
 //
 //  Created by Alexander Vlasov on 26.02.2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class web3swift_macOS_Tests: XCTestCase {
+class nervosswift_macOS_Tests: XCTestCase {
     
     override func setUp() {
         super.setUp()

@@ -1,6 +1,6 @@
 //
 //  EthereumTransaction.swift
-//  web3swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 05.12.2017.
 //  Copyright © 2017 Alexander Vlasov. All rights reserved.
@@ -66,9 +66,9 @@ public struct EthereumTransaction: CustomStringConvertible {
         self.to = to
     }
     
-    public init(to: EthereumAddress, data: Data, options: Web3Options) {
-        let defaults = Web3Options.defaultOptions()
-        let merged = Web3Options.merge(defaults, with: options)
+    public init(to: EthereumAddress, data: Data, options: NervosOptions) {
+        let defaults = NervosOptions.defaultOptions()
+        let merged = NervosOptions.merge(defaults, with: options)
         self.nonce = BigUInt(0)
         self.gasLimit = merged!.gasLimit!
         self.gasPrice = merged!.gasPrice!
@@ -90,7 +90,7 @@ public struct EthereumTransaction: CustomStringConvertible {
         self.s = s
     }
     
-    public func mergedWithOptions(_ options: Web3Options) -> EthereumTransaction {
+    public func mergedWithOptions(_ options: NervosOptions) -> EthereumTransaction {
         var tx = self;
         if options.gasPrice != nil {
             tx.gasPrice = options.gasPrice!
@@ -131,7 +131,7 @@ public struct EthereumTransaction: CustomStringConvertible {
     public var sender: EthereumAddress? {
         get {
             guard let publicKey = self.recoverPublicKey() else {return nil}
-            return Web3.Utils.publicToAddress(publicKey)
+            return Nervos.Utils.publicToAddress(publicKey)
         }
     }
     
@@ -229,7 +229,7 @@ public struct EthereumTransaction: CustomStringConvertible {
     }
     
     static func fromJSON(_ json: [String: Any]) -> EthereumTransaction? {
-        guard let options = Web3Options.fromJSON(json) else {return nil}
+        guard let options = NervosOptions.fromJSON(json) else {return nil}
         guard let toString = json["to"] as? String else {return nil}
         var to: EthereumAddress
         if toString == "0x" || toString == "0x0" {
@@ -329,7 +329,7 @@ public struct EthereumTransaction: CustomStringConvertible {
         }
     }
     
-    static func createRequest(method: JSONRPCmethod, transaction: EthereumTransaction, onBlock: String? = nil, options: Web3Options?) -> JSONRPCrequest? {
+    static func createRequest(method: JSONRPCmethod, transaction: EthereumTransaction, onBlock: String? = nil, options: NervosOptions?) -> JSONRPCrequest? {
         var request = JSONRPCrequest()
         request.method = method
 //        guard let from = options?.from else {return nil}

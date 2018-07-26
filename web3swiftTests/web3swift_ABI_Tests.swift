@@ -1,6 +1,6 @@
 //
-//  web3swiftABITests.swift
-//  web3swift-iOS_Tests
+//  nervosswiftABITests.swift
+//  nervosswift-iOS_Tests
 //
 //  Created by Георгий Фесенко on 02/07/2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -11,7 +11,7 @@ import BigInt
 
 @testable import web3swift_iOS
 
-class web3swift_ABI_Tests: XCTestCase {
+class nervosswift_ABI_Tests: XCTestCase {
     
     
     func testRealABIv2() {

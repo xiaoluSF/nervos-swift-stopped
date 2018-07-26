@@ -1,6 +1,6 @@
 //
 //  EIP67CodeGenerator.swift
-//  web3swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 09.04.2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -10,7 +10,7 @@ import Foundation
 import CoreImage
 import BigInt
 
-extension Web3 {
+extension Nervos {
 
     public struct EIP67Code {
         public var address: EthereumAddress

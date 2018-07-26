@@ -1,6 +1,6 @@
 //
-//  Web3+BrowserFunctions.swift
-//  web3swift-iOS
+//  Nervos+BrowserFunctions.swift
+//  nervosswift-iOS
 //
 //  Created by Alexander Vlasov on 26.02.2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -9,10 +9,10 @@
 import Foundation
 import BigInt
 
-extension web3.BrowserFunctions {
+extension nervos.BrowserFunctions {
     
     public func getAccounts() -> [String]? {
-        let result = self.web3.eth.getAccounts()
+        let result = self.nervos.eth.getAccounts()
         switch result {
         case .failure(_):
             return nil
@@ -38,9 +38,9 @@ extension web3.BrowserFunctions {
     
     public func sign(_ personalMessage: Data, account: String, password: String = "BANKEXFOUNDATION") -> String? {
         do {
-            guard let keystoreManager = self.web3.provider.attachedKeystoreManager else {return nil}
+            guard let keystoreManager = self.nervos.provider.attachedKeystoreManager else {return nil}
             
-            guard let signature = try Web3Signer.signPersonalMessage(personalMessage, keystore: keystoreManager, account: EthereumAddress(account)!, password: password) else {return nil}
+            guard let signature = try NervosSigner.signPersonalMessage(personalMessage, keystore: keystoreManager, account: EthereumAddress(account)!, password: password) else {return nil}
             guard let sender = self.personalECRecover(personalMessage, signature: signature) else {return nil}
             print(sender)
             if sender.lowercased() != account.lowercased() {
@@ -71,22 +71,22 @@ extension web3.BrowserFunctions {
             print("Most likely it's hash already, allow for now")
             hash = personalMessage
         } else {
-            guard let h = Web3.Utils.hashPersonalMessage(personalMessage) else {return nil}
+            guard let h = Nervos.Utils.hashPersonalMessage(personalMessage) else {return nil}
             hash = h
         }
         guard let publicKey = SECP256K1.recoverPublicKey(hash: hash, signature: signatureData) else {return nil}
-        return Web3.Utils.publicToAddressString(publicKey)
+        return Nervos.Utils.publicToAddressString(publicKey)
     }
     
     
     public func sendTransaction(_ transactionJSON: [String: Any], password: String = "BANKEXFOUNDATION") -> [String:Any]? {
         guard let transaction = EthereumTransaction.fromJSON(transactionJSON) else {return nil}
-        guard let options = Web3Options.fromJSON(transactionJSON) else {return nil}
+        guard let options = NervosOptions.fromJSON(transactionJSON) else {return nil}
         return self.sendTransaction(transaction, options: options, password: password)
     }
     
-    public func sendTransaction(_ transaction: EthereumTransaction, options: Web3Options, password: String = "BANKEXFOUNDATION") -> [String:Any]? {
-        let result = self.web3.eth.sendTransaction(transaction, options: options, password: password)
+    public func sendTransaction(_ transaction: EthereumTransaction, options: NervosOptions, password: String = "BANKEXFOUNDATION") -> [String:Any]? {
+        let result = self.nervos.eth.sendTransaction(transaction, options: options, password: password)
         switch result {
         case .failure(_):
             return nil
@@ -97,12 +97,12 @@ extension web3.BrowserFunctions {
     
 //    public func estimateGas(_ transactionJSON: [String: Any]) -> BigUInt? {
 //        guard let transaction = EthereumTransaction.fromJSON(transactionJSON) else {return nil}
-//        guard let options = Web3Options.fromJSON(transactionJSON) else {return nil}
+//        guard let options = NervosOptions.fromJSON(transactionJSON) else {return nil}
 //        return self.estimateGas(transaction, options: options)
 //    }
     
-//    public func estimateGas(_ transaction: EthereumTransaction, options: Web3Options) -> BigUInt? {
-//        let result = self.web3.eth.estimateGas(transaction, options: options)
+//    public func estimateGas(_ transaction: EthereumTransaction, options: NervosOptions) -> BigUInt? {
+//        let result = self.nervos.eth.estimateGas(transaction, options: options)
 //        switch result {
 //        case .failure(_):
 //            return nil
@@ -111,17 +111,17 @@ extension web3.BrowserFunctions {
 //        }
 //    }
     
-    public func prepareTxForApproval(_ transactionJSON: [String: Any]) -> (transaction: EthereumTransaction?, options: Web3Options?) {
+    public func prepareTxForApproval(_ transactionJSON: [String: Any]) -> (transaction: EthereumTransaction?, options: NervosOptions?) {
         guard let transaction = EthereumTransaction.fromJSON(transactionJSON) else {return (nil, nil)}
-        guard let options = Web3Options.fromJSON(transactionJSON) else {return (nil, nil)}
+        guard let options = NervosOptions.fromJSON(transactionJSON) else {return (nil, nil)}
         return self.prepareTxForApproval(transaction, options: options)
     }
     
-    public func prepareTxForApproval(_ trans: EthereumTransaction, options  opts: Web3Options) -> (transaction: EthereumTransaction?, options: Web3Options?) {
+    public func prepareTxForApproval(_ trans: EthereumTransaction, options  opts: NervosOptions) -> (transaction: EthereumTransaction?, options: NervosOptions?) {
         let transaction = trans
         let options = opts
         guard let _ = options.from else {return (nil, nil)}
-//        let gasPriceResult = self.web3.eth.getGasPrice()
+//        let gasPriceResult = self.nervos.eth.getGasPrice()
 //        if case .failure(_) = gasPriceResult {
 //            return (nil, nil)
 //        }
@@ -136,16 +136,16 @@ extension web3.BrowserFunctions {
     
     public func signTransaction(_ transactionJSON: [String: Any], password: String = "BANKEXFOUNDATION") -> String? {
         guard let transaction = EthereumTransaction.fromJSON(transactionJSON) else {return nil}
-        guard let options = Web3Options.fromJSON(transactionJSON) else {return nil}
+        guard let options = NervosOptions.fromJSON(transactionJSON) else {return nil}
         return self.signTransaction(transaction, options: options, password: password)
     }
     
-    public func signTransaction(_ trans: EthereumTransaction, options: Web3Options, password: String = "BANKEXFOUNDATION") -> String? {
+    public func signTransaction(_ trans: EthereumTransaction, options: NervosOptions, password: String = "BANKEXFOUNDATION") -> String? {
         do {
             var transaction = trans
             guard let from = options.from else {return nil}
-            guard let keystoreManager = self.web3.provider.attachedKeystoreManager else {return nil}
-//            let gasPriceResult = self.web3.eth.getGasPrice()
+            guard let keystoreManager = self.nervos.provider.attachedKeystoreManager else {return nil}
+//            let gasPriceResult = self.nervos.eth.getGasPrice()
 //            if case .failure(_) = gasPriceResult {
 //                return nil
 //            }
@@ -153,18 +153,18 @@ extension web3.BrowserFunctions {
 //            guard let gasEstimate = self.estimateGas(transaction, options: options) else {return nil}
 //            transaction.gasLimit = gasEstimate
             
-            let nonceResult = self.web3.eth.getTransactionCount(address: from, onBlock: "pending")
+            let nonceResult = self.nervos.eth.getTransactionCount(address: from, onBlock: "pending")
             if case .failure(_) = nonceResult {
                 return nil
             }
             transaction.nonce = nonceResult.value!
             
-            if (self.web3.provider.network != nil) {
-                transaction.chainID = self.web3.provider.network?.chainID
+            if (self.nervos.provider.network != nil) {
+                transaction.chainID = self.nervos.provider.network?.chainID
             }
             
             guard let keystore = keystoreManager.walletForAddress(from) else {return nil}
-            try Web3Signer.signTX(transaction: &transaction, keystore: keystore, account: from, password: password)
+            try NervosSigner.signTX(transaction: &transaction, keystore: keystore, account: from, password: password)
             print(transaction)
             let signedData = transaction.encode(forSignature: false, chainID: nil)?.toHexString().addHexPrefix()
             return signedData

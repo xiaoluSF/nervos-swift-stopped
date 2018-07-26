@@ -1,6 +1,6 @@
 //
-//  Web3+Provider.swift
-//  web3swift
+//  Nervos+Provider.swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 19.12.2017.
 //  Copyright © 2017 Bankex Foundation. All rights reserved.
@@ -9,7 +9,7 @@
 import Foundation
 import BigInt
 
-public class InfuraProvider: Web3HttpProvider {
+public class InfuraProvider: NervosHttpProvider {
     public init?(_ net:Networks, accessToken token: String? = nil, keystoreManager manager: KeystoreManager? = nil) {
 //        var requestURLstring = "https://" + net.name + ".infura.io/"
         var requestURLstring = "http://47.94.105.230:1337/"

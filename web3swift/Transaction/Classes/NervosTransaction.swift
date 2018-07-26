@@ -1,6 +1,6 @@
 //
 //  NervosTransaction.swift
-//  web3swift-iOS
+//  nervosswift-iOS
 //
 //  Created by XiaoLu on 2018/7/18.
 //  Copyright © 2018年 Bankex Foundation. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  RLP.swift
-//  web3swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 09.12.2017.
 //  Copyright © 2017 Bankex Foundation. All rights reserved.
@@ -301,20 +301,20 @@ struct RLP {
     }
     
     internal static func slice(data: Data, offset: BigUInt, length: BigUInt) throws -> Data {
-        if BigUInt(data.count) < offset + length {throw Web3Error.dataError}
+        if BigUInt(data.count) < offset + length {throw NervosError.dataError}
         let slice = data[UInt64(offset) ..< UInt64(offset + length)]
         return Data(slice)
     }
     
     internal static func slice(data: Data, start: BigUInt) throws -> Data {
-        if BigUInt(data.count) < start {throw Web3Error.dataError}
+        if BigUInt(data.count) < start {throw NervosError.dataError}
         let slice = data[UInt64(start) ..< UInt64(data.count)]
         return Data(slice)
     }
     
     internal static func toBigUInt(_ raw: Data) throws -> BigUInt {
         if raw.count == 0 {
-            throw Web3Error.dataError
+            throw NervosError.dataError
         } else if raw.count == 1 {
             return BigUInt.init(raw)
         } else {

@@ -1,6 +1,6 @@
 //
 //  CryptoExtensions.swift
-//  web3swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 04.12.2017.
 //  Copyright © 2017 Alexander Vlasov. All rights reserved.

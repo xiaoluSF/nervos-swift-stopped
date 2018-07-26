@@ -1,6 +1,6 @@
 //
-//  Web3+Provider.swift
-//  web3swift
+//  Nervos+Provider.swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 19.12.2017.
 //  Copyright © 2017 Bankex Foundation. All rights reserved.
@@ -10,7 +10,7 @@ import Foundation
 import BigInt
 import PromiseKit
 
-public protocol Web3Provider {
+public protocol NervosProvider {
 //    func send(request: JSONRPCrequest) -> [String:Any]?
 //    func send(requests: [JSONRPCrequest]) -> [[String: Any]?]?
 //    func sendWithRawResult(request: JSONRPCrequest) -> Data?
@@ -22,7 +22,7 @@ public protocol Web3Provider {
     var session: URLSession {get}
 }
 
-public class Web3HttpProvider: Web3Provider {
+public class NervosHttpProvider: NervosProvider {
     public var url: URL
     public var network: Networks?
     public var attachedKeystoreManager: KeystoreManager? = nil
@@ -37,7 +37,7 @@ public class Web3HttpProvider: Web3Provider {
             url = httpProviderURL
             if net == nil {
                 let request = JSONRPCRequestFabric.prepareRequest(.getNetwork, parameters: [])
-                let response = try Web3HttpProvider.post(request, providerURL: httpProviderURL, queue: DispatchQueue.global(qos: .userInteractive), session: session).wait()
+                let response = try NervosHttpProvider.post(request, providerURL: httpProviderURL, queue: DispatchQueue.global(qos: .userInteractive), session: session).wait()
                 if response.error != nil {
                     if response.message != nil {
                         print(response.message!)
@@ -88,7 +88,7 @@ public class Web3HttpProvider: Web3Provider {
 //    }
 //
 //    internal func syncPostRaw(_ request: JSONRPCrequest) -> Any? {
-//        return Web3HttpProvider.syncPost(request, providerURL: self.url)
+//        return NervosHttpProvider.syncPost(request, providerURL: self.url)
 //    }
 //
 //    static func syncPostRaw(_ request: JSONRPCrequest, providerURL: URL) -> Any? {
@@ -109,12 +109,12 @@ public class Web3HttpProvider: Web3Provider {
 //    }
 //
 //    internal func syncPost(_ request: JSONRPCrequest) -> Any? {
-//        return Web3HttpProvider.syncPost(request, providerURL: self.url)
+//        return NervosHttpProvider.syncPost(request, providerURL: self.url)
 //    }
 //
 //    internal func syncPost(_ requests: [JSONRPCrequest]) -> Any? {
 //        let batch = JSONRPCrequestBatch(requests: requests)
-//        return Web3HttpProvider.syncPost(batch, providerURL: self.url)
+//        return NervosHttpProvider.syncPost(batch, providerURL: self.url)
 //    }
 //
 //    static func syncPost(_ request: JSONRPCrequest, providerURL: URL) -> Any? {

@@ -1,6 +1,6 @@
 //
-//  Web3+Methods.swift
-//  web3swift
+//  Nervos+Methods.swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 21.12.2017.
 //  Copyright © 2017 Bankex Foundation. All rights reserved.

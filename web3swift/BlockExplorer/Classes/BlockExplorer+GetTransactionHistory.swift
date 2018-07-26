@@ -1,6 +1,6 @@
 //
 //  BlockExporter+GetTransactionHistory.swift
-//  web3swift-iOS
+//  nervosswift-iOS
 //
 //  Created by Георгий Фесенко on 19/06/2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -85,7 +85,7 @@ public struct TransactionHistoryRecord: Decodable {
         id = try container.decode(String.self, forKey: CodingKeys.id)
         let hashString = try container.decode(String.self, forKey: CodingKeys.hash)
         guard let hashData  = Data.fromHex(hashString) else {
-            throw Web3Error.transactionSerializationError
+            throw NervosError.transactionSerializationError
         }
         hash = hashData
         let intBlock = try container.decode(UInt64.self, forKey: CodingKeys.block)
@@ -95,7 +95,7 @@ public struct TransactionHistoryRecord: Decodable {
             stringAddressFrom = stringAddressFrom.addHexPrefix()
         }
         guard let nativeAddressFrom = EthereumAddress(stringAddressFrom) else {
-            throw Web3Error.transactionSerializationError
+            throw NervosError.transactionSerializationError
         }
         addressFrom = nativeAddressFrom
         var stringAddressTo = try container.decode(String.self, forKey: CodingKeys.addressTo)
@@ -103,7 +103,7 @@ public struct TransactionHistoryRecord: Decodable {
             stringAddressTo = stringAddressTo.addHexPrefix()
         }
         guard let nativeAddressTo = EthereumAddress(stringAddressTo) else {
-            throw Web3Error.transactionSerializationError
+            throw NervosError.transactionSerializationError
         }
         addressTo = nativeAddressTo
         isoTime = try container.decode(String.self, forKey: CodingKeys.isoTime)
@@ -134,13 +134,13 @@ public struct TransactionHistoryRecord: Decodable {
         isInner = intIsInner == 0 ? false : true
         let stringValue  = try container.decode(String.self, forKey: CodingKeys.value)
         guard let uintValue = UInt64(stringValue, radix: 16) else {
-            throw Web3Error.transactionSerializationError
+            throw NervosError.transactionSerializationError
         }
         value = BigUInt(integerLiteral: uintValue)
         token = try container.decode(Token.self, forKey: CodingKeys.token)
         let stringTxFee = try container.decode(String.self, forKey: CodingKeys.txFee)
         guard let uintTxFee = UInt64(stringTxFee, radix: 16) else {
-            throw Web3Error.transactionSerializationError
+            throw NervosError.transactionSerializationError
         }
         
         txFee = BigUInt.init(integerLiteral: uintTxFee)
@@ -190,7 +190,7 @@ public struct Token: Decodable {
         let stringAddress = try container.decode(String.self, forKey: CodingKeys.address)
         if !stringAddress.isEmpty {
             guard let nativeAddress = EthereumAddress(stringAddress, type: .normal, ignoreChecksum: true) else {
-                throw Web3Error.transactionSerializationError
+                throw NervosError.transactionSerializationError
             }
             address = nativeAddress
         } else {
