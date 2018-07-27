@@ -41,7 +41,7 @@ extension nervos.Appchain {
             } catch {
                 throw NervosError.inputError("Failed to locally sign a transaction")
             }
-            return self.nervos.eth.sendRawTransactionPromise(assembledTransaction)
+            return self.nervos.appchain.sendRawTransactionPromise(assembledTransaction)
         } catch {
             let returnPromise = Promise<TransactionSendingResult>.pending()
             queue.async {
