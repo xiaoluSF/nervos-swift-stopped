@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
 s.name         = "NervosSwift"
-s.version      = "0.172"
+s.version      = "0.173"
 s.summary      = "Nervos SDK implementation in Swift for  iOS and macOS"
 s.description  = <<-DESC
 Nervos SDK implementation in Swift for  iOS and macOS,intended for mobile developers of wallets, Dapps and Nervos
@@ -9,7 +9,7 @@ Nervos SDK implementation in Swift for  iOS and macOS,intended for mobile develo
 s.homepage     = "https://github.com/cryptape/NervosSwift"
 s.license      = "Apache License 2.0"
 s.author             = { "LuFP" => "lfp@cryptape.com" }
-s.source       = { :git => "https://github.com/cryptape/NervosSwift.git", :tag => "v#{s.version}" } # = "v0.17"
+s.source       = { :git => "https://github.com/cryptape/NervosSwift.git", :tag => "v#{s.version}" }
 s.social_media_url = 'https://twitter.com/nervosnetwork'
 
 s.swift_version = '4.1'
