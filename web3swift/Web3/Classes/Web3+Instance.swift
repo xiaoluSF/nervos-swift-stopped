@@ -34,7 +34,7 @@ public class nervos: NervosOptionsInheritable {
     }
     
     var ethInstance: nervos.Appchain?
-    public var eth: nervos.Appchain {
+    public var appchain: nervos.Appchain {
         if (self.ethInstance != nil) {
             return self.ethInstance!
         }
