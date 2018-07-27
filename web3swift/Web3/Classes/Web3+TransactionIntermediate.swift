@@ -110,7 +110,7 @@ extension nervos.nervoscontract.TransactionIntermediate {
             optionsForGasEstimation.from = mergedOptions.from
             optionsForGasEstimation.to = mergedOptions.to
             optionsForGasEstimation.value = mergedOptions.value
-            let getNoncePromise : Promise<BigUInt> = self.nervos.eth.getTransactionCountPromise(address: from, onBlock: onBlock)
+            let getNoncePromise : Promise<BigUInt> = self.nervos.appchain.getTransactionCountPromise(address: from, onBlock: onBlock)
 //            let gasEstimatePromise : Promise<BigUInt> = self.nervos.eth.estimateGasPromise(assembledTransaction, options: optionsForGasEstimation, onBlock: onBlock)
 //            let gasPricePromise : Promise<BigUInt> = self.nervos.eth.getGasPricePromise()
             var promisesToFulfill: [Promise<BigUInt>] = [getNoncePromise]
@@ -157,7 +157,7 @@ extension nervos.nervoscontract.TransactionIntermediate {
             var cleanedOptions = NervosOptions()
             cleanedOptions.from = mergedOptions.from
             cleanedOptions.to = mergedOptions.to
-            return self.nervos.eth.sendTransactionPromise(transaction, options: cleanedOptions, password: password)
+            return self.nervos.appchain.sendTransactionPromise(transaction, options: cleanedOptions, password: password)
         }
     }
     
@@ -173,7 +173,7 @@ extension nervos.nervoscontract.TransactionIntermediate {
             optionsForCall.from = mergedOptions.from
             optionsForCall.to = mergedOptions.to
             optionsForCall.value = mergedOptions.value
-            let callPromise : Promise<Data> = self.nervos.eth.callPromise(assembledTransaction, options: optionsForCall, onBlock: onBlock)
+            let callPromise : Promise<Data> = self.nervos.appchain.callPromise(assembledTransaction, options: optionsForCall, onBlock: onBlock)
             callPromise.done(on: queue) {(data:Data) throws in
                     do {
                         if (self.method == "fallback") {

@@ -12,7 +12,7 @@ import BigInt
 extension nervos.BrowserFunctions {
     
     public func getAccounts() -> [String]? {
-        let result = self.nervos.eth.getAccounts()
+        let result = self.nervos.appchain.getAccounts()
         switch result {
         case .failure(_):
             return nil
@@ -86,7 +86,7 @@ extension nervos.BrowserFunctions {
     }
     
     public func sendTransaction(_ transaction: EthereumTransaction, options: NervosOptions, password: String = "BANKEXFOUNDATION") -> [String:Any]? {
-        let result = self.nervos.eth.sendTransaction(transaction, options: options, password: password)
+        let result = self.nervos.appchain.sendTransaction(transaction, options: options, password: password)
         switch result {
         case .failure(_):
             return nil
@@ -153,7 +153,7 @@ extension nervos.BrowserFunctions {
 //            guard let gasEstimate = self.estimateGas(transaction, options: options) else {return nil}
 //            transaction.gasLimit = gasEstimate
             
-            let nonceResult = self.nervos.eth.getTransactionCount(address: from, onBlock: "pending")
+            let nonceResult = self.nervos.appchain.getTransactionCount(address: from, onBlock: "pending")
             if case .failure(_) = nonceResult {
                 return nil
             }

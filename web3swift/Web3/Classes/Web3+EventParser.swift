@@ -167,7 +167,7 @@ extension nervos.nervoscontract.EventParser {
     
     public func parseTransactionByHashPromise(_ hash: Data) -> Promise<[EventParserResultProtocol]> {
         let queue = self.nervos.requestDispatcher.queue
-        return self.nervos.eth.getTransactionReceiptPromise(hash).map(on:queue) {receipt throws -> [EventParserResultProtocol] in
+        return self.nervos.appchain.getTransactionReceiptPromise(hash).map(on:queue) {receipt throws -> [EventParserResultProtocol] in
             guard let results = parseReceiptForLogs(receipt: receipt, contract: self.contract, eventName: self.eventName, filter: self.filter) else {
                     throw NervosError.processingError("Failed to parse receipt for events")
             }
@@ -336,7 +336,7 @@ extension nervos.nervoscontract {
                 }
             }
             return fetchLogsPromise.thenMap(on:queue) {singleEvent in
-                return self.nervos.eth.getTransactionReceiptPromise(singleEvent.eventLog!.transactionHash).map(on: queue) { receipt in
+                return self.nervos.appchain.getTransactionReceiptPromise(singleEvent.eventLog!.transactionHash).map(on: queue) { receipt in
                     var joinedEvent = singleEvent
                     joinedEvent.transactionReceipt = receipt
                     return joinedEvent as EventParserResultProtocol
