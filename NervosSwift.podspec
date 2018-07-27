@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
 s.name         = "NervosSwift"
-s.version      = "0.17"
+s.version      = "0.172"
 s.summary      = "Nervos SDK implementation in Swift for  iOS and macOS"
 s.description  = <<-DESC
 Nervos SDK implementation in Swift for  iOS and macOS,intended for mobile developers of wallets, Dapps and Nervos
@@ -27,5 +27,6 @@ s.dependency 'CryptoSwift', '~> 0.10.0'
 s.dependency 'libsodium', '~> 1.0.12'
 s.dependency 'secp256k1_ios', '~> 0.1.3'
 s.dependency 'PromiseKit', '~> 6.3.0'
+s.dependency 'SwiftProtobuf', '~> 1.0.3'
 
 end
