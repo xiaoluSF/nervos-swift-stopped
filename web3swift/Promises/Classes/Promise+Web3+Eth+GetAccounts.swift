@@ -1,6 +1,6 @@
 //
-//  Promise+Web3+Eth+GetAccounts.swift
-//  web3swift
+//  Promise+Nervos+Eth+GetAccounts.swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 17.06.2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -10,13 +10,13 @@ import Foundation
 import BigInt
 import PromiseKit
 
-extension web3.Eth {
+extension nervos.Appchain {
     public func getAccountsPromise() -> Promise<[EthereumAddress]> {
-        let queue = web3.requestDispatcher.queue
-        if (self.web3.provider.attachedKeystoreManager != nil) {
+        let queue = nervos.requestDispatcher.queue
+        if (self.nervos.provider.attachedKeystoreManager != nil) {
             let promise = Promise<[EthereumAddress]>.pending()
             queue.async {
-                let result = self.web3.wallet.getAccounts()
+                let result = self.nervos.wallet.getAccounts()
                 switch result {
                 case .success(let allAccounts):
                     promise.resolver.fulfill(allAccounts)
@@ -27,13 +27,13 @@ extension web3.Eth {
             return promise.promise
         }
         let request = JSONRPCRequestFabric.prepareRequest(.getAccounts, parameters: [])
-        let rp = web3.dispatch(request)
+        let rp = nervos.dispatch(request)
         return rp.map(on: queue ) { response in
             guard let value: [EthereumAddress] = response.getValue() else {
                 if response.error != nil {
-                    throw Web3Error.nodeError(response.error!.message)
+                    throw NervosError.nodeError(response.error!.message)
                 }
-                throw Web3Error.nodeError("Invalid value from Ethereum node")
+                throw NervosError.nodeError("Invalid value from Ethereum node")
             }
             return value
         }

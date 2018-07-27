@@ -1,6 +1,6 @@
 //
-//  web3swiftKyestoresTests.swift
-//  web3swift-iOS_Tests
+//  nervosswiftKyestoresTests.swift
+//  nervosswift-iOS_Tests
 //
 //  Created by Георгий Фесенко on 02/07/2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -11,7 +11,7 @@ import CryptoSwift
 
 @testable import web3swift_iOS
 
-class web3swift_Keystores_tests: XCTestCase {
+class nervosswift_Keystores_tests: XCTestCase {
     
     func testBIP39 () {
         var entropy = Data.fromHex("00000000000000000000000000000000")!
@@ -65,7 +65,7 @@ class web3swift_Keystores_tests: XCTestCase {
         XCTAssertNotNil(keystore)
         let account = keystore!.addresses![0]
         let key = try! keystore!.UNSAFE_getPrivateKeyData(password: "", account: account)
-        let pubKey = Web3.Utils.privateToPublic(key, compressed: true);
+        let pubKey = Nervos.Utils.privateToPublic(key, compressed: true);
         XCTAssert(pubKey?.toHexString() == "027160bd3a4d938cac609ff3a11fe9233de7b76c22a80d2b575e202cbf26631659")
     }
     
@@ -83,7 +83,7 @@ class web3swift_Keystores_tests: XCTestCase {
         XCTAssertNotNil(keystore)
         let account = keystore!.addresses![0]
         let key = try! keystore!.UNSAFE_getPrivateKeyData(password: "", account: account)
-        let pubKey = Web3.Utils.privateToPublic(key, compressed: true);
+        let pubKey = Nervos.Utils.privateToPublic(key, compressed: true);
         XCTAssert(pubKey?.toHexString() == "027160bd3a4d938cac609ff3a11fe9233de7b76c22a80d2b575e202cbf26631659")
     }
     

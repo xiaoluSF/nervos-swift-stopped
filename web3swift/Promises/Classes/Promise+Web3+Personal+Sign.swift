@@ -1,6 +1,6 @@
 //
-//  Promise+Web3+Personal+Sign.swift
-//  web3swift
+//  Promise+Nervos+Personal+Sign.swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 18.06.2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -10,25 +10,25 @@ import Foundation
 import BigInt
 import PromiseKit
 
-extension web3.Personal {
+extension nervos.Personal {
     
     func signPersonalMessagePromise(message: Data, from: EthereumAddress, password:String = "BANKEXFOUNDATION") -> Promise<Data> {
-        let queue = web3.requestDispatcher.queue
+        let queue = nervos.requestDispatcher.queue
         do {
-            if self.web3.provider.attachedKeystoreManager == nil {
+            if self.nervos.provider.attachedKeystoreManager == nil {
                 let hexData = message.toHexString().addHexPrefix()
-                let request = JSONRPCRequestFabric.prepareRequest(.personalSign, parameters: [from.address.lowercased(), hexData])
-                return self.web3.dispatch(request).map(on: queue) {response in
+                let request = JSONRPCRequestFabric.prepareRequest(.sign, parameters: [from.address.lowercased(), hexData])
+                return self.nervos.dispatch(request).map(on: queue) {response in
                     guard let value: Data = response.getValue() else {
                         if response.error != nil {
-                            throw Web3Error.nodeError(response.error!.message)
+                            throw NervosError.nodeError(response.error!.message)
                         }
-                        throw Web3Error.nodeError("Invalid value from Ethereum node")
+                        throw NervosError.nodeError("Invalid value from Ethereum node")
                     }
                     return value
                 }
             }
-            guard let signature = try Web3Signer.signPersonalMessage(message, keystore: self.web3.provider.attachedKeystoreManager!, account: from, password: password) else { throw Web3Error.inputError("Failed to locally sign a message") }
+            guard let signature = try NervosSigner.signPersonalMessage(message, keystore: self.nervos.provider.attachedKeystoreManager!, account: from, password: password) else { throw NervosError.inputError("Failed to locally sign a message") }
             let returnPromise = Promise<Data>.pending()
             queue.async {
                 returnPromise.resolver.fulfill(signature)

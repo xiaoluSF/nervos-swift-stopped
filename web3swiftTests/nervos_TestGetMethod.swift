@@ -1,0 +1,113 @@
+//
+//  nervos_TestGetMethod.swift
+//  nervosswift-iOS_Tests
+//
+//  Created by XiaoLu on 2018/7/18.
+//  Copyright © 2018年 Bankex Foundation. All rights reserved.
+//
+
+import XCTest
+import BigInt
+
+@testable import web3swift_iOS
+class nervos_TestGetMethod: XCTestCase {
+    
+    override func setUp() {
+        super.setUp()
+        // Put setup code here. This method is called before the invocation of each test method in the class.
+    }
+    
+    override func tearDown() {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
+    }
+    
+    func testExample() {
+        let nervos = Nervos.InfuraMainnetNervos()
+//        let peerCount = nervos.eth.getPeerCount()
+//        guard case .success(let currentPeerCount) = peerCount else {
+//            return XCTFail()
+//        }
+//        let blockNumber = nervos.eth.getBlockNumber()
+//        guard case .success(let currentBlock) = blockNumber else {return XCTFail()}
+//        print("current block number is " + currentBlock.description)
+//        print("currentPeerCount is  " + currentPeerCount.description)
+//        print((BigUInt(88) + currentBlock).description)
+//
+//        let coldWalletAddress = EthereumAddress("0x6782CdeF6A4A056d412775EE6081d32B2bf90287")!
+
+//        let nt = NervosTransaction.init(to: coldWalletAddress, nonce: BigUInt(208), quota: BigUInt(200000), valid_until_block: (BigUInt(88) + currentBlock), version: BigUInt(0), data: Data.fromHex("")!, value: Data.fromHex("4")!, chain_id: BigUInt(1))
+
+//        print(try! nt.signNervosTransaction(privateKey: "b5fd0cf3fc298289bad33f04b0f99eabaa12f01c1b6062347ea016315c86c974"))
+
+//        let result = nervos.eth.sendRawTransaction(nt, privateKey: "b5fd0cf3fc298289bad33f04b0f99eabaa12f01c1b6062347ea016315c86c974")
+//        switch result {
+//        case .success(let r):
+//            print(r.hash)
+//            print(r.transaction.description)
+//            break
+//        case .failure(let error):
+//            print(error.localizedDescription)
+//            break
+//        }
+        
+//        let receipt = nervos.eth.getTransactionReceipt("0x3fc7e352fbb16784b05a3b1f7931c8217550ce63ee30f5d1a932257e357b30db")
+//        switch receipt {
+//        case .success(let re):
+//            print(re)
+//        case .failure(let error):
+//            print(error.localizedDescription)
+//        }
+        
+//        let nervosBlock = nervos.eth.getBlockByNumber(BigUInt(726117),fullTransactions:false)
+//        switch nervosBlock {
+//        case .success(let nb):
+//            print(nb)
+//            break
+//        case .failure(let error):
+//            print(error.localizedDescription)
+//        }
+        
+//        let mateData = nervos.eth.getMetaData(BigUInt(726117))
+//        switch mateData {
+//        case .success(let metaData):
+//            print(metaData)
+//            break
+//        case .failure(let error):
+//            print(error.localizedDescription)
+//        }
+        
+//        let transaction = nervos.eth.getTransactionDetails("0x3fc7e352fbb16784b05a3b1f7931c8217550ce63ee30f5d1a932257e357b30db")
+//        switch transaction {
+//        case .success(let t):
+//            print(t)
+//        case .failure(let error):
+//            print(error.localizedDescription)
+//        }
+        
+//        let transactionCount = nervos.eth.getBalance(address: EthereumAddress("0x6782CdeF6A4A056d412775EE6081d32B2bf90287")!)
+//        switch transactionCount {
+//        case .success(let t):
+//            print(t)
+//        case .failure(let error):
+//            print(error.localizedDescription)
+//        }
+        
+//        let transactionProof = nervos.eth.getTransactionProof("0x3fc7e352fbb16784b05a3b1f7931c8217550ce63ee30f5d1a932257e357b30db")
+//        switch transactionProof{
+//        case .success(let r):
+//            print(r.toHexString())
+//        case .failure(let error):
+//            print(error.localizedDescription)
+//        }
+        
+    }
+    
+    func testPerformanceExample() {
+        // This is an example of a performance test case.
+        self.measure {
+            // Put the code you want to measure the time of here.
+        }
+    }
+    
+}

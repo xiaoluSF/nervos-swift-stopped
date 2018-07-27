@@ -1,6 +1,6 @@
 //
 //  ABIv2TypeParser.swift
-//  web3swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 03.04.2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -49,7 +49,7 @@ public struct ABIv2TypeParser {
     
     public static func parseTypeString(_ string:String) throws -> ABIv2.Element.ParameterType {
         let (type, tail) = recursiveParseType(string)
-        guard let t = type, tail == nil else {throw Web3Error.inputError("Failed to parse ABI element " + string)}
+        guard let t = type, tail == nil else {throw NervosError.inputError("Failed to parse ABI element " + string)}
         return t
     }
     

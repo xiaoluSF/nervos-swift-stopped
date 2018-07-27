@@ -1,6 +1,6 @@
 //
 //  ContractABIv2.swift
-//  web3swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 04.04.2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -79,7 +79,7 @@ public struct ContractV2:ContractProtocol {
         return toReturn
     }
     
-    public var options: Web3Options? = Web3Options.defaultOptions()
+    public var options: NervosOptions? = NervosOptions.defaultOptions()
     
     public init?(_ abiString: String, at: EthereumAddress? = nil) {
         do {
@@ -108,9 +108,9 @@ public struct ContractV2:ContractProtocol {
         address = at
     }
     
-    public func deploy(bytecode:Data, parameters: [AnyObject] = [AnyObject](), extraData: Data = Data(), options: Web3Options?) -> EthereumTransaction? {
+    public func deploy(bytecode:Data, parameters: [AnyObject] = [AnyObject](), extraData: Data = Data(), options: NervosOptions?) -> EthereumTransaction? {
         let to:EthereumAddress = EthereumAddress.contractDeploymentAddress()
-        let mergedOptions = Web3Options.merge(self.options, with: options)
+        let mergedOptions = NervosOptions.merge(self.options, with: options)
         var gasLimit:BigUInt
         if let gasInOptions = mergedOptions?.gasLimit {
             gasLimit = gasInOptions
@@ -144,9 +144,9 @@ public struct ContractV2:ContractProtocol {
     }
     
     
-    public func method(_ method:String = "fallback", parameters: [AnyObject] = [AnyObject](), extraData: Data = Data(), options: Web3Options?) -> EthereumTransaction? {
+    public func method(_ method:String = "fallback", parameters: [AnyObject] = [AnyObject](), extraData: Data = Data(), options: NervosOptions?) -> EthereumTransaction? {
         var to:EthereumAddress
-        let mergedOptions = Web3Options.merge(self.options, with: options)
+        let mergedOptions = NervosOptions.merge(self.options, with: options)
         if (self.address != nil) {
             to = self.address!
         } else if let toFound = mergedOptions?.to, toFound.isValid {

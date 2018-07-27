@@ -1,6 +1,6 @@
 //
-//  Web3.swift
-//  web3swift
+//  Nervos.swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 11.12.2017.
 //  Copyright © 2017 Bankex Foundation. All rights reserved.
@@ -10,7 +10,7 @@ import Foundation
 import Result
 import BigInt
 
-public enum Web3Error: Error {
+public enum NervosError: Error {
     case transactionSerializationError
     case connectionError
     case dataError
@@ -23,40 +23,40 @@ public enum Web3Error: Error {
     case unknownError
 }
 
-public struct Web3 {
+public struct Nervos {
     
-    public static func new(_ providerURL: URL) -> web3? {
-        guard let provider = Web3HttpProvider(providerURL) else {return nil}
-        return web3(provider: provider)
+    public static func new(_ providerURL: URL) -> nervos? {
+        guard let provider = NervosHttpProvider(providerURL) else {return nil}
+        return nervos(provider: provider)
     }
     
-    public static func InfuraRinkebyWeb3(accessToken: String? = nil) -> web3 {
+    public static func InfuraRinkebyNervos(accessToken: String? = nil) -> nervos {
         let infura = InfuraProvider(Networks.Rinkeby, accessToken: accessToken)!
-        return web3(provider: infura)
+        return nervos(provider: infura)
     }
-    public static func InfuraMainnetWeb3(accessToken: String? = nil) -> web3 {
+    public static func InfuraMainnetNervos(accessToken: String? = nil) -> nervos {
         let infura = InfuraProvider(Networks.Mainnet, accessToken: accessToken)!
-        return web3(provider: infura)
+        return nervos(provider: infura)
     }
 }
 
 struct ResultUnwrapper {
-    static func getResponse(_ response: [String: Any]?) -> Result<Any, Web3Error> {
+    static func getResponse(_ response: [String: Any]?) -> Result<Any, NervosError> {
         guard response != nil, let res = response else {
-            return Result.failure(Web3Error.connectionError)
+            return Result.failure(NervosError.connectionError)
         }
         if let error = res["error"] {
             if let errString = error as? String {
-                return Result.failure(Web3Error.nodeError(errString))
+                return Result.failure(NervosError.nodeError(errString))
             } else if let errDict = error as? [String:Any] {
                 if errDict["message"] != nil, let descr = errDict["message"]! as? String  {
-                    return Result.failure(Web3Error.nodeError(descr))
+                    return Result.failure(NervosError.nodeError(descr))
                 }
             }
-            return Result.failure(Web3Error.unknownError)
+            return Result.failure(NervosError.unknownError)
         }
         guard let result = res["result"] else {
-            return Result.failure(Web3Error.dataError)
+            return Result.failure(NervosError.dataError)
         }
         return Result(result)
     }

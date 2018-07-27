@@ -1,6 +1,6 @@
 //
 //  EthereumAddress.swift
-//  web3swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 07.01.2018.
 //

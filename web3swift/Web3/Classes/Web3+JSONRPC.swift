@@ -1,6 +1,6 @@
-//
-//  Web3+JSONRPC.swift
-//  web3swift
+ //
+//  Nervos+JSONRPC.swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 21.12.2017.
 //  Copyright © 2017 Bankex Foundation. All rights reserved.
@@ -93,14 +93,14 @@ public struct JSONRPCresponse: Decodable{
     internal var decodableTypes: [Decodable.Type] = [[EventLog].self,
                                   [TransactionDetails].self,
                                   [TransactionReceipt].self,
-                                  [Block].self,
+                                  [NervosBlock].self,
                                   [String].self,
                                   [Int].self,
                                   [Bool].self,
                                   EventLog.self,
                                   TransactionDetails.self,
                                   TransactionReceipt.self,
-                                  Block.self,
+                                  NervosBlock.self,
                                   String.self,
                                   Int.self,
                                   Bool.self,
@@ -108,6 +108,8 @@ public struct JSONRPCresponse: Decodable{
                                   [String:Int].self]
     
     public init(from decoder: Decoder) throws {
+        
+        
         let container = try decoder.container(keyedBy: JSONRPCresponseKeys.self)
         let id: Int = try container.decode(Int.self, forKey: .id)
         let jsonrpc: String = try container.decode(String.self, forKey: .jsonrpc)
@@ -116,6 +118,7 @@ public struct JSONRPCresponse: Decodable{
             self.init(id: id, jsonrpc: jsonrpc, result: nil, error: errorMessage)
             return
         }
+        print(container)
         var result: Any? = nil
         if let rawValue = try? container.decodeIfPresent(String.self, forKey: .result) {
             result = rawValue
@@ -125,7 +128,9 @@ public struct JSONRPCresponse: Decodable{
             result = rawValue
         } else if let rawValue = try? container.decodeIfPresent(EventLog.self, forKey: .result) {
             result = rawValue
-        } else if let rawValue = try? container.decodeIfPresent(Block.self, forKey: .result) {
+        } else if let rawValue = try? container.decodeIfPresent(NervosBlock.self, forKey: .result) {
+            result = rawValue
+        } else if let rawValue = try? container.decodeIfPresent(MetaData.self, forKey: .result){
             result = rawValue
         } else if let rawValue = try? container.decodeIfPresent(TransactionReceipt.self, forKey: .result) {
             result = rawValue
@@ -133,7 +138,7 @@ public struct JSONRPCresponse: Decodable{
             result = rawValue
         } else if let rawValue = try? container.decodeIfPresent([EventLog].self, forKey: .result) {
             result = rawValue
-        } else if let rawValue = try? container.decodeIfPresent([Block].self, forKey: .result) {
+        } else if let rawValue = try? container.decodeIfPresent([NervosBlock].self, forKey: .result) {
             result = rawValue
         } else if let rawValue = try? container.decodeIfPresent([TransactionReceipt].self, forKey: .result) {
             result = rawValue
@@ -172,13 +177,13 @@ public struct JSONRPCresponse: Decodable{
             guard let value = EthereumAddress(string, ignoreChecksum: true) else {return nil}
             return value as? T
         }
-//        else if slf == String.self {
-//            guard let value = self.result as? T else {return nil}
-//            return value
-//        } else if slf == Int.self {
-//            guard let value = self.result as? T else {return nil}
-//            return value
-//        }
+        else if slf == String.self {
+            guard let value = self.result as? T else {return nil}
+            return value
+        } else if slf == Int.self {
+            guard let value = self.result as? T else {return nil}
+            return value
+        }
         else if slf == [BigUInt].self {
             guard let string = self.result as? [String] else {return nil}
             let values = string.compactMap { (str) -> BigUInt? in
@@ -204,23 +209,23 @@ public struct JSONRPCresponse: Decodable{
             }
             return values as? T
         }
-//        else if slf == [String].self {
-//            guard let value = self.result as? T else {return nil}
-//            return value
-//        } else if slf == [Int].self {
-//            guard let value = self.result as? T else {return nil}
-//            return value
-//        } else if slf == [String: String].self{
-//            guard let value = self.result as? T else {return nil}
-//            return value
-//        }
-//        else if slf == [String: AnyObject].self{
-//            guard let value = self.result as? T else {return nil}
-//            return value
-//        } else if slf == [String: Any].self{
-//            guard let value = self.result as? T else {return nil}
-//            return value
-//        }
+        else if slf == [String].self {
+            guard let value = self.result as? T else {return nil}
+            return value
+        } else if slf == [Int].self {
+            guard let value = self.result as? T else {return nil}
+            return value
+        } else if slf == [String: String].self{
+            guard let value = self.result as? T else {return nil}
+            return value
+        }
+        else if slf == [String: AnyObject].self{
+            guard let value = self.result as? T else {return nil}
+            return value
+        } else if slf == [String: Any].self{
+            guard let value = self.result as? T else {return nil}
+            return value
+        }
         guard let value = self.result as? T  else {return nil}
         return value
     }

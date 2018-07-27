@@ -1,6 +1,6 @@
 //
-//  Promise+Web3+Intermediate+Send.swift
-//  web3swift
+//  Promise+Nervos+Intermediate+Send.swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 18.06.2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.

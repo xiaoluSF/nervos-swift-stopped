@@ -1,6 +1,6 @@
 //
 //  BlockExporter.swift
-//  web3swift-iOS
+//  nervosswift-iOS
 //
 //  Created by Георгий Фесенко on 19/06/2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.

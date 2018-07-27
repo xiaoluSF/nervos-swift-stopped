@@ -1,6 +1,6 @@
 //
 //  Promise+Batching.swift
-//  web3swift
+//  nervosswift
 //
 //  Created by Alexander Vlasov on 17.06.2018.
 //  Copyright © 2018 Bankex Foundation. All rights reserved.
@@ -14,11 +14,11 @@ public class JSONRPCrequestDispatcher {
     public var policy: DispatchPolicy
     public var queue: DispatchQueue
     
-    private var provider: Web3Provider
+    private var provider: NervosProvider
     private var lockQueue: DispatchQueue
     private var batches: [Batch] = [Batch]()
     
-    init(provider: Web3Provider, queue: DispatchQueue, policy: DispatchPolicy) {
+    init(provider: NervosProvider, queue: DispatchQueue, policy: DispatchPolicy) {
         self.provider = provider
         self.queue = queue
         self.policy = policy
@@ -31,19 +31,19 @@ public class JSONRPCrequestDispatcher {
         var promisesDict: [UInt64: (promise: Promise<JSONRPCresponse>, resolver: Resolver<JSONRPCresponse>)] = [UInt64: (promise: Promise<JSONRPCresponse>, resolver: Resolver<JSONRPCresponse>)]()
         var requests: [JSONRPCrequest] = [JSONRPCrequest]()
         var pendingTrigger: Guarantee<Void>?
-        var provider: Web3Provider
+        var provider: NervosProvider
         var queue: DispatchQueue
         var lockQueue : DispatchQueue
         var triggered : Bool = false
         func add(_ request: JSONRPCrequest, maxWaitTime: TimeInterval) throws -> Promise<JSONRPCresponse> {
             if self.triggered {
-                throw Web3Error.nodeError("Batch is already in flight")
+                throw NervosError.nodeError("Batch is already in flight")
             }
             let requestID = request.id
             let promiseToReturn = Promise<JSONRPCresponse>.pending()
             self.queue.async {
                 if self.promisesDict[requestID] != nil {
-                    promiseToReturn.resolver.reject(Web3Error.processingError("Request ID collision"))
+                    promiseToReturn.resolver.reject(NervosError.processingError("Request ID collision"))
                 }
                 self.promisesDict[requestID] = promiseToReturn
                 self.requests.append(request)
@@ -70,7 +70,7 @@ public class JSONRPCrequestDispatcher {
                     for response in batch.responses {
                         if self.promisesDict[UInt64(response.id)] == nil {
                             for k in self.promisesDict.keys {
-                                self.promisesDict[k]?.resolver.reject(Web3Error.nodeError("Unknown request id"))
+                                self.promisesDict[k]?.resolver.reject(NervosError.nodeError("Unknown request id"))
                             }
                             return
                         }
@@ -87,7 +87,7 @@ public class JSONRPCrequestDispatcher {
             }
         }
         
-        init (provider: Web3Provider, capacity: Int, queue: DispatchQueue, lockQueue: DispatchQueue) {
+        init (provider: NervosProvider, capacity: Int, queue: DispatchQueue, lockQueue: DispatchQueue) {
             self.provider = provider
             self.capacity = capacity
             self.queue = queue
@@ -97,7 +97,7 @@ public class JSONRPCrequestDispatcher {
     
     func getBatch() throws -> Batch {
         guard case .Batch(let batchLength) = self.policy else {
-            throw Web3Error.inputError("Trying to batch a request when policy is not to batch")
+            throw NervosError.inputError("Trying to batch a request when policy is not to batch")
         }
         let currentBatch = self.batches.last!
         if currentBatch.requests.count % batchLength == 0 || currentBatch.triggered {
@@ -127,6 +127,7 @@ public class JSONRPCrequestDispatcher {
                         internalPromise.done(on: self.queue) {resp in
                             seal.fulfill(resp)
                         }.catch(on: self.queue){err in
+                            print(err.localizedDescription)
                             seal.reject(err)
                         }
                     } catch {
