@@ -88,7 +88,7 @@ public struct NervosSigner {
             }
             let originalPublicKey = SECP256K1.privateToPublic(privateKey: privateKey)
             transaction.chainID = nil
-            transaction.v = BigUInt(unmarshalledSignature.v) + BigUInt(27)
+            transaction.v = BigUInt(unmarshalledSignature.v)// + BigUInt(27)
             transaction.r = BigUInt(Data(unmarshalledSignature.r))
             transaction.s = BigUInt(Data(unmarshalledSignature.s))
             let recoveredPublicKey = transaction.recoverPublicKey()
