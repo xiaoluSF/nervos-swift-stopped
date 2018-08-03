@@ -53,7 +53,7 @@ class nervosswift_remoteParsing_Tests: XCTestCase {
         let nervos = Nervos.InfuraMainnetNervos()
         let contract = nervos.contract(jsonString, at: nil, abiVersion: 2)
         guard let eventParser = contract?.createEventParser("Transfer", filter: nil) else {return XCTFail()}
-        let blockNumber = nervos.eth.getBlockNumber()
+        let blockNumber = nervos.appchain.getBlockNumber()
         guard case .success(let currentBlock) = blockNumber else {return XCTFail()}
         let currentBlockAsInt = UInt64(currentBlock)
         for i in currentBlockAsInt-1 ... currentBlockAsInt {

@@ -38,6 +38,10 @@ public struct Nervos {
         let infura = InfuraProvider(Networks.Mainnet, accessToken: accessToken)!
         return nervos(provider: infura)
     }
+    public static func InfuraNervosNetWork(host:String) -> nervos{
+        let infura = InfuraProvider(Networks.Nervos, accessToken: host)!
+        return nervos(provider: infura)
+    }
 }
 
 struct ResultUnwrapper {

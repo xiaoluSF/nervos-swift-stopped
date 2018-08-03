@@ -70,7 +70,7 @@ class nervosswift_transactions_Tests: XCTestCase {
     
     func testTransactionReceipt() {
         let nervos = Nervos.InfuraMainnetNervos()
-        let result = nervos.eth.getTransactionReceipt("0x83b2433606779fd756417a863f26707cf6d7b2b55f5d744a39ecddb8ca01056e")
+        let result = nervos.appchain.getTransactionReceipt("0x83b2433606779fd756417a863f26707cf6d7b2b55f5d744a39ecddb8ca01056e")
         switch result {
         case .failure(let error):
             print(error)

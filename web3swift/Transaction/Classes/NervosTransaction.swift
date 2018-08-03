@@ -23,10 +23,10 @@ public struct NervosTransaction : CustomStringConvertible {
     public var valid_until_block : BigUInt
     public var version : BigUInt
     public var data : Data
-    public var value : Data
+    public var value : BigUInt
     public var chain_id : BigUInt
     
-    public init(to:EthereumAddress,nonce:BigUInt,quota:BigUInt,valid_until_block:BigUInt,version:BigUInt,data:Data,value:Data,chain_id:BigUInt){
+    public init(to:EthereumAddress,nonce:BigUInt,quota:BigUInt,valid_until_block:BigUInt,version:BigUInt,data:Data,value:BigUInt,chain_id:BigUInt){
         self.nonce = nonce
         self.to = to
         self.quota = quota
@@ -48,7 +48,7 @@ public struct NervosTransaction : CustomStringConvertible {
             toReturn = toReturn + "valid_until_block: " + String(self.valid_until_block) + "\n"
             toReturn = toReturn + "version: " + String(self.version) + "\n"
             toReturn = toReturn + "data: " + String(self.data.toHexString()) + "\n"
-            toReturn = toReturn + "value: " + String(self.value.toHexString()) + "\n"
+            toReturn = toReturn + "value: " + self.value.description + "\n"
             toReturn = toReturn + "chain_id: " + String(self.chain_id)
             return toReturn
         }
@@ -62,32 +62,21 @@ public struct NervosTransaction : CustomStringConvertible {
         tx.quota = UInt64(quota)
         tx.data = data
         tx.version = UInt32(version)
-        tx.value = value
+        tx.value = Data(hex: String(value,radix: 16))
         tx.chainID = UInt32(chain_id)
         tx.validUntilBlock = UInt64(valid_until_block)
         let binaryData: Data = try! tx.serializedData()
-        
-        print(">>>>>>>>>>" + binaryData.toHexString())
-        
+//        print(">>>>>>>>>>" + binaryData.toHexString())
         guard let privateKeyData = Data.fromHex(privateKey) else{
             throw TransactionError.privateKeyIsNull
         }
-        let protobufHash = binaryData.sha3(.sha256)
-        print("protobufHash:" + protobufHash.toHexString())
-        
-//        let (compressedSignature, _) = SECP256K1.signForRecovery(hash: protobufHash, privateKey: privateKeyData, useExtraEntropy: false)
-        
-        guard var recoverableSignature = SECP256K1.recoverableSign(hash: protobufHash, privateKey: privateKeyData) else {
+        let protobufHash = binaryData.sha3(.keccak256)
+//        print("protobufHash:" + protobufHash.toHexString())
+        let (compressedSignature, _) = SECP256K1.signForRecovery(hash: protobufHash, privateKey: privateKeyData, useExtraEntropy: false)
+        guard let signature = compressedSignature else {
             throw TransactionError.unknownError
         }
-        guard let signature = SECP256K1.serializeSignature(recoverableSignature: &recoverableSignature) else {
-            throw TransactionError.unknownError
-        }
-        
-//        guard let signature = compressedSignature else {
-//            throw TransactionError.unknownError
-//        }
-        print("signature:++++++ " + signature.toHexString())
+//        print("signature:++++++ " + signature.toHexString())
 
         var unverify_tx = UnverifiedTransaction()
         unverify_tx.transaction = tx
@@ -100,11 +89,6 @@ public struct NervosTransaction : CustomStringConvertible {
         }
         return signed_data
     }
-    
-    
-    
-    
-
     
     static func createRawTransactionRequest(transaction: NervosTransaction,privateKey:String) -> JSONRPCrequest? {
         let txSignStr = try! transaction.signNervosTransaction(privateKey: privateKey)

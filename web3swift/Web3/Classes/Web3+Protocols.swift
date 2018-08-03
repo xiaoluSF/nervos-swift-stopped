@@ -36,6 +36,7 @@ public enum Networks {
     case Ropsten
     case Kovan
     case Custom(networkID: BigUInt)
+    case Nervos
     
     var name: String {
         switch self {
@@ -44,6 +45,7 @@ public enum Networks {
         case .Mainnet: return "mainnet"
         case .Kovan: return "kovan"
         case .Custom: return ""
+        case .Nervos: return ""
         }
     }
     
@@ -54,6 +56,7 @@ public enum Networks {
         case .Ropsten: return BigUInt(3)
         case .Rinkeby: return BigUInt(4)
         case .Kovan: return BigUInt(42)
+        case .Nervos : return BigUInt(0)
         }
     }
     

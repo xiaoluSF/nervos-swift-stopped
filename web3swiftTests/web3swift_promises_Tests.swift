@@ -17,7 +17,7 @@ class nervosswift_promises_Tests: XCTestCase {
     func testGetBalancePromise() {
         do {
             let nervos = Nervos.InfuraMainnetNervos()
-            let balance = try nervos.eth.getBalancePromise(address: "0x6394b37Cf80A7358b38068f0CA4760ad49983a1B").wait()
+            let balance = try nervos.appchain.getBalancePromise(address: "0x6394b37Cf80A7358b38068f0CA4760ad49983a1B").wait()
             print(balance)
         } catch {
             print(error)
