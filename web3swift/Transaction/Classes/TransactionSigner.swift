@@ -107,13 +107,12 @@ public struct NervosSigner {
         tx.quota = UInt64(transaction.quota)
         tx.data = transaction.data
         tx.version = UInt32(transaction.version)
-        tx.value = transaction.value
+        tx.value = Data(hex: String(transaction.value,radix: 16))
         tx.chainID = UInt32(transaction.chain_id)
         let binaryData: Data = try! tx.serializedData()
         let protobufHash = binaryData.sha3(.keccak256)
         var privateKey = try keystore.UNSAFE_getPrivateKeyData(password: password, account: account)
         defer {Data.zero(&privateKey)}
-
         let (compressedSignature, _) = SECP256K1.signForRecovery(hash: protobufHash, privateKey: privateKey, useExtraEntropy: false)
         guard let signature = compressedSignature else {
             throw TransactionError.unknownError
@@ -124,11 +123,8 @@ public struct NervosSigner {
         unverify_tx.crypto = .secp
         let unverfyData:Data = try! unverify_tx.serializedData()
         let signed_data = unverfyData.toHexString()
-        
         return signed_data
     }
-    
-    
 }
 
 

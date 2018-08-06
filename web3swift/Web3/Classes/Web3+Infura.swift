@@ -11,13 +11,11 @@ import BigInt
 
 public class InfuraProvider: NervosHttpProvider {
     public init?(_ net:Networks, accessToken token: String? = nil, keystoreManager manager: KeystoreManager? = nil) {
-//        var requestURLstring = "https://" + net.name + ".infura.io/"
-        var requestURLstring = "http://47.94.105.230:1337/"
-//        var requestURLstring = "http://47.75.129.215:1337/"
-        if token != nil {
-            requestURLstring = requestURLstring + token!
+        var requestURLString = "http://47.94.105.230:1337/"
+        if let token = token {
+            requestURLString += token
         }
-        let providerURL = URL(string: requestURLstring)
+        let providerURL = URL(string: requestURLString)
         super.init(providerURL!, network: net, keystoreManager: manager)
     }
     

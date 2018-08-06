@@ -14,7 +14,7 @@ class nervosswift_infura_Tests: XCTestCase {
     func testGetBalance() {
         let nervos = Nervos.InfuraMainnetNervos()
         let address = EthereumAddress("0x6394b37Cf80A7358b38068f0CA4760ad49983a1B")!
-        let response = nervos.eth.getBalance(address: address)
+        let response = nervos.appchain.getBalance(address: address)
         switch response {
         case .failure(_):
             XCTFail()
