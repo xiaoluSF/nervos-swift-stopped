@@ -24,22 +24,13 @@ public enum NervosError: Error {
 }
 
 public struct Nervos {
-    
     public static func new(_ providerURL: URL) -> nervos? {
-        guard let provider = NervosHttpProvider(providerURL) else {return nil}
+        guard let provider = NervosHttpProvider(providerURL) else { return nil }
         return nervos(provider: provider)
     }
-    
-    public static func InfuraRinkebyNervos(accessToken: String? = nil) -> nervos {
-        let infura = InfuraProvider(Networks.Rinkeby, accessToken: accessToken)!
-        return nervos(provider: infura)
-    }
-    public static func InfuraMainnetNervos(accessToken: String? = nil) -> nervos {
-        let infura = InfuraProvider(Networks.Mainnet, accessToken: accessToken)!
-        return nervos(provider: infura)
-    }
-    public static func InfuraNervosNetWork(host:String) -> nervos{
-        let infura = InfuraProvider(Networks.Nervos, accessToken: host)!
+
+    public static func defaultNervosProvider(host: String) -> nervos {
+        let infura = DefaultProvider(.nervos, urlString: host)!
         return nervos(provider: infura)
     }
 }
@@ -52,8 +43,8 @@ struct ResultUnwrapper {
         if let error = res["error"] {
             if let errString = error as? String {
                 return Result.failure(NervosError.nodeError(errString))
-            } else if let errDict = error as? [String:Any] {
-                if errDict["message"] != nil, let descr = errDict["message"]! as? String  {
+            } else if let errDict = error as? [String: Any] {
+                if errDict["message"] != nil, let descr = errDict["message"]! as? String {
                     return Result.failure(NervosError.nodeError(descr))
                 }
             }
@@ -65,9 +56,3 @@ struct ResultUnwrapper {
         return Result(result)
     }
 }
-
-
-
-
-
-
