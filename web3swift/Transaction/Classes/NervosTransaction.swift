@@ -36,25 +36,23 @@ public struct NervosTransaction : CustomStringConvertible {
         self.value = value
         self.chain_id = chain_id
     }
-    
-    
-    public var description: String{
-        get{
-            var toReturn = ""
-            toReturn = toReturn + "Transaction" + "\n"
-            toReturn = toReturn + "nonce: " + String(self.nonce) + "\n"
-            toReturn = toReturn + "to: " + String(self.to.address) + "\n"
-            toReturn = toReturn + "quota: " + String(self.quota) + "\n"
-            toReturn = toReturn + "valid_until_block: " + String(self.valid_until_block) + "\n"
-            toReturn = toReturn + "version: " + String(self.version) + "\n"
-            toReturn = toReturn + "data: " + String(self.data.toHexString()) + "\n"
-            toReturn = toReturn + "value: " + self.value.description + "\n"
-            toReturn = toReturn + "chain_id: " + String(self.chain_id)
-            return toReturn
+
+    public var description: String {
+        get {
+            return [
+                "Transaction",
+                "nonce: " + String(nonce),
+                "to: " + String(to.address),
+                "quota: " + String(quota),
+                "valid_until_block: " + String(valid_until_block),
+                "version: " + String(version),
+                "data: " + data.toHexString(),
+                "value: " + value.description,
+                "chain_id: " + String(chain_id)
+            ].joined(separator: "\n")
         }
     }
-    
-    
+
     public func signNervosTransaction(privateKey:String) throws -> String{
         var tx = Transaction()
         tx.nonce = nonce.description
