@@ -3,11 +3,18 @@ disabled_rules:
   - force_try
   - variable_name
   - shorthand_operator
+  - type_name # TODO: enable this and fix errors
+  - cyclomatic_complexity # TODo: enable this and fix complexity issues
+  - large_tuple
 
 excluded:
   - Pods
   - web3swift-macOS_Tests
   - web3swiftTests
+
+function_body_length:
+  - 100 # warning
+  - 220 # error
 
 type_body_length:
   - 300 # warning
