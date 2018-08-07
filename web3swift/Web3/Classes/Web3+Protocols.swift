@@ -31,49 +31,28 @@ public protocol EventParserProtocol {
 }
 
 public enum Networks {
-    case Rinkeby
-    case Mainnet
-    case Ropsten
-    case Kovan
-    case Custom(networkID: BigUInt)
-    case Nervos
-    
+    case nervos
+    case custom(networkID: BigUInt)
+
     var name: String {
-        switch self {
-        case .Rinkeby: return "rinkeby"
-        case .Ropsten: return "ropsten"
-        case .Mainnet: return "mainnet"
-        case .Kovan: return "kovan"
-        case .Custom: return ""
-        case .Nervos: return ""
-        }
+        return ""
     }
-    
+
     var chainID: BigUInt {
         switch self {
-        case .Custom(let networkID): return networkID
-        case .Mainnet: return BigUInt(1)
-        case .Ropsten: return BigUInt(3)
-        case .Rinkeby: return BigUInt(4)
-        case .Kovan: return BigUInt(42)
-        case .Nervos : return BigUInt(0)
+        case .nervos:
+            return BigUInt(0)
+        case .custom(let networkID):
+            return networkID
         }
     }
-    
-    static let allValues = [Mainnet, Ropsten, Kovan, Rinkeby]
-    
-    static func fromInt(_ networkID:Int) -> Networks? {
+
+    static func fromInt(_ networkID: Int) -> Networks? {
         switch networkID {
-        case 1:
-            return Networks.Mainnet
-        case 3:
-            return Networks.Ropsten
-        case 4:
-            return Networks.Rinkeby
-        case 42:
-            return Networks.Kovan
+        case 0:
+            return .nervos
         default:
-            return Networks.Custom(networkID: BigUInt(networkID))
+            return .custom(networkID: BigUInt(networkID))
         }
     }
 }

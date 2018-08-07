@@ -47,7 +47,7 @@ class nervosswift_transactions_Tests: XCTestCase {
     }
     
     func testEthSendExample() {
-        let nervos = Nervos.InfuraMainnetNervos()
+        let nervos = defaultNervosProvider
         let sendToAddress = EthereumAddress("0x6394b37Cf80A7358b38068f0CA4760ad49983a1B")!
         let tempKeystore = try! EthereumKeystoreV3(password: "")
         let keystoreManager = KeystoreManager([tempKeystore!])
@@ -69,7 +69,7 @@ class nervosswift_transactions_Tests: XCTestCase {
     }
     
     func testTransactionReceipt() {
-        let nervos = Nervos.InfuraMainnetNervos()
+        let nervos = defaultNervosProvider
         let result = nervos.appchain.getTransactionReceipt("0x83b2433606779fd756417a863f26707cf6d7b2b55f5d744a39ecddb8ca01056e")
         switch result {
         case .failure(let error):
@@ -96,7 +96,7 @@ class nervosswift_transactions_Tests: XCTestCase {
 //    func testSendETH() {
 //        guard let keystoreData = getKeystoreData() else {return}
 //        guard let keystoreV3 = EthereumKeystoreV3.init(keystoreData) else {return XCTFail()}
-//        let nervosRinkeby = Nervos.InfuraRinkebyNervos()
+//        let nervosRinkeby = defaultNervosProvider
 //        let keystoreManager = KeystoreManager.init([keystoreV3])
 //        nervosRinkeby.addKeystoreManager(keystoreManager)
 //        guard case .success(let gasPriceRinkeby) = nervosRinkeby.eth.getGasPrice() else {return}
@@ -117,7 +117,7 @@ class nervosswift_transactions_Tests: XCTestCase {
     
     func testTokenBalanceTransferOnMainNet() {
         // BKX TOKEN
-        let nervos = Nervos.InfuraMainnetNervos()
+        let nervos = defaultNervosProvider
         let coldWalletAddress = EthereumAddress("0x6394b37Cf80A7358b38068f0CA4760ad49983a1B")!
         let contractAddress = EthereumAddress("0x45245bc59219eeaaf6cd3f382e078a461ff9de7b")!
         var options = NervosOptions()

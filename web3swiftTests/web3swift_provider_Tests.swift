@@ -9,10 +9,10 @@
 import XCTest
 
 @testable import web3swift_iOS
-class nervosswift_infura_Tests: XCTestCase {
+class NervosswiftProviderTests: XCTestCase {
     
     func testGetBalance() {
-        let nervos = Nervos.InfuraMainnetNervos()
+        let nervos = defaultNervosProvider
         let address = EthereumAddress("0x6394b37Cf80A7358b38068f0CA4760ad49983a1B")!
         let response = nervos.appchain.getBalance(address: address)
         switch response {

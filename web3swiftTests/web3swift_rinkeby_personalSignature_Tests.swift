@@ -18,7 +18,7 @@ class nervosswift_rinkeby_personalSignature_Tests: XCTestCase {
     
     
     func testPersonalSignature() {
-        let nervos = Nervos.InfuraRinkebyNervos()
+        let nervos = defaultNervosProvider
         let tempKeystore = try! EthereumKeystoreV3(password: "")
         let keystoreManager = KeystoreManager([tempKeystore!])
         nervos.addKeystoreManager(keystoreManager)
@@ -38,7 +38,7 @@ class nervosswift_rinkeby_personalSignature_Tests: XCTestCase {
     }
     
     func testPersonalSignatureOnContract() {
-        let nervos = Nervos.InfuraRinkebyNervos()
+        let nervos = defaultNervosProvider
         let tempKeystore = try! EthereumKeystoreV3(password: "")
         let keystoreManager = KeystoreManager([tempKeystore!])
         nervos.addKeystoreManager(keystoreManager)

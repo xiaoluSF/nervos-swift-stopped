@@ -3,27 +3,16 @@
 //  nervosswift-iOS_Tests
 //
 //  Created by XiaoLu on 2018/7/18.
-//  Copyright © 2018年 Bankex Foundation. All rights reserved.
+//  Copyright © 2018年 Cryptape. All rights reserved.
 //
 
 import XCTest
 import BigInt
-
 @testable import web3swift_iOS
+
 class nervos_TestGetMethod: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
     func testExample() {
-        let nervos = Nervos.InfuraNervosNetWork(host: "http://121.196.200.225:1337/")
+        let nervos = defaultNervosProvider
 //        let peerCount = nervos.appchain.getPeerCount()
 //        guard case .success(let currentPeerCount) = peerCount else {
 //            return XCTFail()
