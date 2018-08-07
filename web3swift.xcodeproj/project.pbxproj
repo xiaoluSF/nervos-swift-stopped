@@ -874,7 +874,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0930;
-				ORGANIZATIONNAME = "Bankex Foundation";
+				ORGANIZATIONNAME = Cryptape;
 				TargetAttributes = {
 					1CD91AFB1FD76910007BFB45 = {
 						CreatedOnToolsVersion = 9.1;
