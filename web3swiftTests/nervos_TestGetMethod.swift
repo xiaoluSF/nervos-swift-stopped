@@ -3,7 +3,7 @@
 //  nervosswift-iOS_Tests
 //
 //  Created by XiaoLu on 2018/7/18.
-//  Copyright © 2018年 Bankex Foundation. All rights reserved.
+//  Copyright © 2018年 Cryptape. All rights reserved.
 //
 
 import XCTest
@@ -12,7 +12,7 @@ import BigInt
 
 class nervos_TestGetMethod: XCTestCase {
     func testExample() {
-        let nervos = Nervos.defaultNervosProvider(host: "http://121.196.200.225:1337/")
+        let nervos = defaultNervosProvider
 //        let peerCount = nervos.appchain.getPeerCount()
 //        guard case .success(let currentPeerCount) = peerCount else {
 //            return XCTFail()

@@ -12,7 +12,7 @@ import XCTest
 class NervosswiftProviderTests: XCTestCase {
     
     func testGetBalance() {
-        let nervos = Nervos.defaultNervosProvider(host: "http://121.196.200.225:1337/")
+        let nervos = defaultNervosProvider
         let address = EthereumAddress("0x6394b37Cf80A7358b38068f0CA4760ad49983a1B")!
         let response = nervos.appchain.getBalance(address: address)
         switch response {

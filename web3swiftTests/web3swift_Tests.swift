@@ -98,7 +98,7 @@ class nervosswiftTests: XCTestCase {
     func testUserCaseEventParsing() {
         let contractAddress = EthereumAddress("0x7ff546aaccd379d2d1f241e1d29cdd61d4d50778")
         let jsonString = "[{\"constant\":false,\"inputs\":[{\"name\":\"_id\",\"type\":\"string\"}],\"name\":\"deposit\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"_from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"_id\",\"type\":\"string\"},{\"indexed\":true,\"name\":\"_value\",\"type\":\"uint256\"}],\"name\":\"Deposit\",\"type\":\"event\"}]"
-        let nervos = Nervos.defaultNervosProvider(host: "http://121.196.200.225:1337/")
+        let nervos = defaultNervosProvider
         let contract = nervos.contract(jsonString, at: contractAddress, abiVersion: 2)
         guard let eventParser = contract?.createEventParser("Deposit", filter: nil) else {return XCTFail()}
         let present = eventParser.parseBlockByNumber(UInt64(2138657))
@@ -131,7 +131,7 @@ class nervosswiftTests: XCTestCase {
     func testPublicMappingsAccess() {
         do {
             let jsonString = "[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"users\",\"outputs\":[{\"name\":\"name\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"userDeviceCount\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalUsers\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
-            let nervos = Nervos.defaultNervosProvider(host: "http://121.196.200.225:1337/")
+            let nervos = defaultNervosProvider
             guard let addr = EthereumAddress("0xdef61132a0c1259464b19e4590e33666aae38574") else {return XCTFail()}
             let contract = nervos.contract(jsonString, at: addr, abiVersion: 2)
             XCTAssert(contract != nil)
